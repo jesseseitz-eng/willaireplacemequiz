@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will AI Replace Me? | AI Career Resilience Score</title>
+<meta name="description" content="Find out how AI-resilient your career is. Free 60-second assessment based on 2026 research from Karpathy, Anthropic, Goldman Sachs, and Microsoft.">
+<meta property="og:title" content="How AI-Resilient Is Your Career?">
+<meta property="og:description" content="Andrej Karpathy scored every US job for AI exposure. Take the free 60-second assessment to find out where you stand.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://willaireplaceme.online">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How AI-Resilient Is Your Career?">
+<meta name="twitter:description" content="Karpathy scored every US job for AI exposure. Find out where you stand — free 60-second assessment.">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<!-- Google Analytics — uncomment and replace G-XXXXXXXXXX with your real measurement ID
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
+-->
+<style>
+  :root {
+    --bg: #07070d;
+    --bg-card: #0e0e18;
+    --bg-hover: #13131f;
+    --red: #ff3344;
+    --orange: #ff7733;
+    --amber: #ffaa22;
+    --yellow: #ffcc00;
+    --green: #22dd77;
+    --teal: #22ccaa;
+    --blue: #3388ff;
+    --text: #eeeef3;
+    --text-mid: #9999b2;
+    --text-dim: #55556d;
+    --border: #1c1c2c;
+    --border-hi: #2a2a40;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  *:focus, *:focus-visible, *:focus-within { outline:none !important; -webkit-focus-ring-color:transparent !important; }
+  button { outline:none !important; -webkit-tap-highlight-color:transparent; -webkit-focus-ring-color:transparent; }
+  button:focus, button:focus-visible { outline:none !important; box-shadow:none !important; border-color:var(--border) !important; }
+  div:focus, div:focus-visible { outline:none !important; border-color:var(--border) !important; }
+  .opt:focus, .opt:focus-visible, .opt:focus-within { 
+    border-color:var(--border) !important; 
+    background:var(--bg-card) !important; 
+    transform:none !important; 
+    box-shadow:none !important;
+    outline:none !important;
+    -webkit-focus-ring-color:transparent !important;
+  }
+  .jtile:focus, .jtile:focus-visible {
+    border-color:var(--border) !important;
+    background:var(--bg-card) !important;
+    outline:none !important;
+  }
+  /* iOS Safari specific */
+  @supports (-webkit-touch-callout: none) {
+    *:focus { outline:none !important; border-color:inherit !important; }
+    button:focus { border-color:var(--border) !important; }
+  }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Sora', sans-serif;
+    min-height: 100vh; overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    color-scheme: dark;
+  }
+
+  /* BG */
+  .noise {
+    position:fixed; inset:0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events:none; z-index:0;
+  }
+  .orb { position:fixed; border-radius:50%; filter:blur(130px); opacity:0.1; pointer-events:none; z-index:0; }
+  .o1 { width:500px; height:500px; top:-180px; left:-120px; background:var(--blue); }
+  .o2 { width:420px; height:420px; bottom:-120px; right:-120px; background:var(--teal); }
+
+  .wrap {
+    position:relative; z-index:1;
+    max-width:620px; margin:0 auto;
+    padding:40px 20px; min-height:100vh;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    background:var(--bg);
+  }
+
+  /* SCREENS */
+  .s { display:none; width:100%; }
+  .s.on { display:flex; flex-direction:column; align-items:center; }
+
+  /* LANDING */
+  .badge {
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:3px;
+    text-transform:uppercase; color:var(--blue);
+    border:1px solid rgba(51,136,255,0.25);
+    padding:5px 14px; border-radius:100px;
+    margin-bottom:28px;
+  }
+  h1 {
+    font-size:clamp(36px,7vw,64px);
+    font-weight:800; text-align:center;
+    line-height:1.06; letter-spacing:-2px;
+    margin-bottom:20px;
+  }
+  h1 .gr {
+    background:linear-gradient(135deg, var(--blue), var(--teal));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .sub {
+    font-size:17px; color:var(--text-mid);
+    text-align:center; max-width:480px;
+    line-height:1.65; margin-bottom:36px;
+    font-weight:300;
+  }
+  .btn-go {
+    background:linear-gradient(135deg, var(--blue), var(--teal));
+    color:#fff; border:none;
+    padding:17px 44px; font-size:17px;
+    font-family:'Sora',sans-serif;
+    font-weight:700; border-radius:100px;
+    cursor:pointer; position:relative; overflow:hidden;
+    transition:transform 0.3s, box-shadow 0.3s;
+  }
+  .btn-go:hover { transform:translateY(-2px); box-shadow:0 14px 40px rgba(51,136,255,0.3); }
+  .btn-go::after {
+    content:''; position:absolute;
+    top:0; left:-100%; width:100%; height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);
+    transition:left 0.5s;
+  }
+  .btn-go:hover::after { left:100%; }
+
+  .note {
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px; color:var(--text-dim); margin-top:14px;
+  }
+
+  .trust-row {
+    display:flex; gap:32px; margin-top:44px; opacity:0.5;
+    flex-wrap:wrap; justify-content:center;
+  }
+  .trust { text-align:center; }
+  .trust b {
+    font-family:'JetBrains Mono',monospace;
+    font-size:20px; color:var(--text); display:block;
+  }
+  .trust span { font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; }
+
+  .src-note {
+    font-size:10px; color:var(--text-dim);
+    text-align:center; margin-top:20px;
+    font-family:'JetBrains Mono',monospace;
+    line-height:1.6;
+  }
+
+  /* PROGRESS */
+  .pbar-w { width:100%; height:2px; background:var(--border); border-radius:10px; margin-bottom:40px; overflow:hidden; }
+  .pbar { height:100%; background:linear-gradient(90deg,var(--blue),var(--teal)); border-radius:10px; transition:width 0.5s cubic-bezier(0.4,0,0.2,1); }
+
+  /* STEP UI */
+  .slbl {
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; color:var(--text-dim);
+    letter-spacing:2px; margin-bottom:10px; align-self:flex-start;
+  }
+  .sq {
+    font-size:clamp(21px,4.2vw,28px);
+    font-weight:700; line-height:1.3;
+    margin-bottom:8px; align-self:flex-start; letter-spacing:-0.3px;
+    color:var(--text);
+  }
+  .shint { font-size:14px; color:var(--text-dim); margin-bottom:28px; align-self:flex-start; }
+
+  /* JOB INPUT */
+  .inp-w { width:100%; position:relative; }
+  .inp {
+    width:100%; background:var(--bg-card);
+    border:1px solid var(--border); color:var(--text);
+    padding:16px 18px; font-size:15px;
+    font-family:'Sora',sans-serif;
+    border-radius:14px; outline:none;
+    transition:border-color 0.3s;
+  }
+  .inp:focus { border-color:var(--blue); }
+  .inp::placeholder { color:var(--text-dim); }
+
+  .ac {
+    position:absolute; top:100%; left:0; right:0;
+    background:var(--bg-card); border:1px solid var(--border);
+    border-top:none; border-radius:0 0 14px 14px;
+    max-height:200px; overflow-y:auto; z-index:10; display:none;
+  }
+  .ac-i {
+    padding:12px 18px; font-size:14px;
+    cursor:pointer; border-bottom:1px solid var(--border);
+    transition:background 0.15s;
+  }
+  .ac-i:hover { background:var(--bg-hover); }
+  .ac-i:last-child { border-bottom:none; }
+
+  /* JOB GRID */
+  .divr {
+    width:100%; text-align:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; color:var(--text-dim);
+    margin:10px 0; position:relative;
+  }
+  .divr::before,.divr::after {
+    content:''; position:absolute; top:50%;
+    width:calc(50% - 30px); height:1px; background:var(--border);
+  }
+  .divr::before { left:0; }
+  .divr::after { right:0; }
+
+  .jgrid {
+    width:100%; display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:8px;
+  }
+  .jtile {
+    background:var(--bg-card); border:1px solid var(--border);
+    border-radius:12px; padding:14px 8px;
+    cursor:pointer; text-align:center;
+    transition:all 0.2s; outline:none; -webkit-tap-highlight-color:transparent;
+  }
+  .jtile:hover { border-color:var(--border-hi); background:var(--bg-hover); transform:translateY(-1px); }
+  .jtile .ji { font-size:22px; margin-bottom:4px; }
+  .jtile .jl { font-size:11px; font-weight:500; color:var(--text-mid); line-height:1.3; }
+
+  /* OPTIONS */
+  .opts { width:100%; display:flex; flex-direction:column; gap:10px; }
+  .opt {
+    width:100%; background:var(--bg-card);
+    border:2px solid var(--border); color:var(--text);
+    padding:18px 22px; font-size:15px;
+    font-family:'Sora',sans-serif; font-weight:400;
+    border-radius:14px; cursor:pointer;
+    transition:background 0.2s, transform 0.2s; text-align:left; line-height:1.4;
+    outline:none !important; -webkit-tap-highlight-color:transparent;
+    -webkit-appearance:none;
+  }
+  @media (hover:hover) {
+    .opt:hover { border-color:var(--blue); background:rgba(51,136,255,0.04); transform:translateX(3px); }
+  }
+  .opt:active { background:rgba(51,136,255,0.12); border-color:var(--blue) !important; }
+  .opt:focus, .opt:focus-visible, .opt:focus-within { 
+    border-color:var(--border) !important; 
+    background:var(--bg-card) !important; 
+    transform:none !important; 
+    box-shadow:none !important;
+    outline:none !important;
+  }
+
+  /* ANALYZING */
+  .ana-t {
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px; color:var(--text-mid);
+    letter-spacing:2px; margin-bottom:28px;
+  }
+  .abars { width:100%; max-width:360px; display:flex; flex-direction:column; gap:6px; margin-bottom:28px; }
+  .ab { height:2px; background:var(--border); border-radius:10px; overflow:hidden; opacity:0; animation:fi 0.3s ease forwards; }
+  .ab-in { height:100%; width:0; background:linear-gradient(90deg,var(--blue),var(--teal)); border-radius:10px; animation:sf 1s ease forwards; }
+  @keyframes fi { to { opacity:1; } }
+  @keyframes sf { to { width:100%; } }
+  .astep {
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px; color:var(--text-dim);
+    margin-bottom:5px; opacity:0; animation:fi 0.4s ease forwards;
+  }
+  .astep .ck { color:var(--green); }
+
+  /* === RESULTS === */
+  .card {
+    width:100%; background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:20px; padding:20px 20px;
+    margin-bottom:0; position:relative; overflow:hidden;
+  }
+  .card::before {
+    content:''; position:absolute;
+    top:0; left:0; right:0; height:3px;
+    border-radius:20px 20px 0 0;
+  }
+  .card.rl::before { background:linear-gradient(90deg,var(--green),var(--teal)); }
+  .card.rm::before { background:linear-gradient(90deg,var(--amber),var(--orange)); }
+  .card.rh::before { background:linear-gradient(90deg,var(--orange),var(--red)); }
+  .card.rc::before { background:linear-gradient(90deg,var(--red),#ee0044); }
+
+  .ctop { display:none; }
+
+  .sc { text-align:center; margin-bottom:14px; }
+  .sc-n {
+    font-size:clamp(52px,10vw,76px);
+    font-weight:800; line-height:1; letter-spacing:-3px;
+  }
+  .rl .sc-n { color:var(--green); text-shadow:0 0 50px rgba(34,221,119,0.2); }
+  .rm .sc-n { color:var(--amber); text-shadow:0 0 50px rgba(255,170,34,0.2); }
+  .rh .sc-n { color:var(--orange); text-shadow:0 0 50px rgba(255,119,51,0.2); }
+  .rc .sc-n { color:var(--red); text-shadow:0 0 50px rgba(255,51,68,0.2); }
+
+  .sc-of {
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px; color:var(--text-dim); letter-spacing:2px;
+  }
+  .sc-lbl {
+    font-size:16px; font-weight:700;
+    text-transform:uppercase; letter-spacing:3px; margin-top:4px;
+  }
+  .rl .sc-lbl { color:var(--green); }
+  .rm .sc-lbl { color:var(--amber); }
+  .rh .sc-lbl { color:var(--orange); }
+  .rc .sc-lbl { color:var(--red); }
+
+  .sc-job { font-size:14px; color:var(--text-mid); margin-top:3px; }
+
+  .bdg { display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-bottom:10px; }
+  .bdi { background:rgba(255,255,255,0.02); border-radius:10px; padding:10px; }
+  .bdi-l {
+    font-size:10px; font-family:'JetBrains Mono',monospace;
+    color:var(--text-dim); text-transform:uppercase;
+    letter-spacing:1px; margin-bottom:4px;
+  }
+  .bdi-bar { width:100%; height:3px; background:var(--border); border-radius:10px; overflow:hidden; margin-bottom:4px; }
+  .bdi-f { height:100%; border-radius:10px; transition:width 1.2s ease; }
+  .bdi-v { font-size:13px; font-weight:600; }
+
+  .bdi-locked {
+    background:rgba(255,255,255,0.02); border-radius:10px; padding:10px;
+    position:relative; overflow:hidden; cursor:pointer;
+  }
+  .bdi-locked:hover { background:rgba(51,136,255,0.05); }
+  .bdi-locked .bdi-l { color:var(--text-dim); }
+  .bdi-locked .bdi-bar { opacity:0.3; }
+  .bdi-locked .bdi-f { background:var(--text-dim) !important; filter:blur(4px); }
+  .bdi-locked .bdi-v { color:var(--text-dim); filter:blur(6px); }
+  .bdi-lock-icon {
+    position:absolute; top:50%; right:12px; transform:translateY(-50%);
+    font-size:14px; opacity:0.5;
+  }
+
+  .cmp {
+    text-align:center; padding:8px;
+    background:rgba(255,255,255,0.02);
+    border-radius:10px; font-size:12px; color:var(--text-mid);
+  }
+  .cmp strong { color:var(--text); }
+
+  .dsrc {
+    text-align:center; font-family:'JetBrains Mono',monospace;
+    font-size:8px; color:var(--text-dim);
+    margin-top:6px; padding-top:6px;
+    border-top:1px solid var(--border);
+  }
+
+  /* KEY INSIGHT */
+  .insight {
+    width:100%; background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:16px; padding:24px;
+    margin-bottom:24px; text-align:center;
+  }
+  .insight-txt {
+    font-size:16px; line-height:1.6;
+    color:var(--text-mid);
+  }
+  .insight-txt strong { color:var(--text); }
+
+  /* TIPS */
+  .tips { width:100%; margin-bottom:24px; }
+  .tips-h { font-size:17px; font-weight:700; margin-bottom:12px; }
+  .tip {
+    background:var(--bg-card); border:1px solid var(--border);
+    border-radius:14px; padding:18px 20px; margin-bottom:10px;
+  }
+  .tip-top { display:flex; align-items:center; gap:10px; margin-bottom:5px; }
+  .tip-i {
+    width:28px; height:28px; border-radius:7px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; flex-shrink:0;
+  }
+  .tip-t { font-size:14px; font-weight:600; }
+  .tip-d { font-size:13px; color:var(--text-mid); line-height:1.55; padding-left:38px; }
+
+  /* SHARE */
+  .share-sec {
+    width:100%; background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:16px; padding:24px;
+    margin-bottom:24px; text-align:center;
+  }
+  .share-h {
+    font-size:15px; font-weight:600; margin-bottom:6px;
+  }
+  .share-p { font-size:13px; color:var(--text-dim); margin-bottom:14px; }
+  .share-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; }
+  .share-b {
+    background:var(--bg); border:1px solid var(--border);
+    color:var(--text); padding:14px 8px;
+    font-size:13px; font-family:'Sora',sans-serif;
+    font-weight:500; border-radius:12px;
+    cursor:pointer; transition:all 0.2s;
+    text-align:center; white-space:nowrap;
+  }
+  .share-b:hover { border-color:var(--blue); transform:translateY(-1px); }
+
+  /* EMAIL */
+  .email-sec {
+    width:100%; background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:16px; padding:24px;
+    margin-bottom:24px; text-align:center;
+  }
+  .email-h { font-size:15px; font-weight:600; margin-bottom:5px; }
+  .email-p { font-size:13px; color:var(--text-mid); margin-bottom:14px; line-height:1.5; }
+  .email-row { display:flex; gap:8px; }
+  .email-in {
+    flex:1; background:var(--bg);
+    border:1px solid var(--border); color:var(--text);
+    padding:13px 16px; font-size:14px;
+    font-family:'Sora',sans-serif;
+    border-radius:10px; outline:none;
+  }
+  .email-in:focus { border-color:var(--blue); }
+  .email-btn {
+    background:linear-gradient(135deg,var(--blue),var(--teal));
+    color:#fff; border:none;
+    padding:13px 20px; font-size:14px;
+    font-family:'Sora',sans-serif;
+    font-weight:600; border-radius:10px;
+    cursor:pointer; white-space:nowrap;
+  }
+  .email-ok { display:none; color:var(--green); font-weight:500; font-size:14px; padding:13px; }
+
+  .retake {
+    background:none; border:1px solid var(--border);
+    color:var(--text-mid); padding:12px 28px;
+    font-size:14px; font-family:'Sora',sans-serif;
+    border-radius:100px; cursor:pointer; margin-top:8px;
+  }
+  .retake:hover { border-color:var(--text-mid); color:var(--text); }
+
+  .upsell {
+    width:100%;
+    background:linear-gradient(135deg, rgba(51,136,255,0.06), rgba(34,204,170,0.06));
+    border:1px solid rgba(51,136,255,0.2);
+    border-radius:20px;
+    padding:28px 24px;
+    margin-bottom:24px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .upsell::before {
+    content:''; position:absolute;
+    top:0; left:0; right:0; height:2px;
+    background:linear-gradient(90deg, var(--blue), var(--teal));
+  }
+  .upsell-badge {
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px; letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--teal);
+    border:1px solid rgba(34,204,170,0.3);
+    padding:3px 10px; border-radius:100px;
+    margin-bottom:14px;
+  }
+  .upsell-h { font-size:18px; font-weight:700; margin-bottom:8px; }
+  .upsell-p { font-size:13px; color:var(--text-mid); line-height:1.6; margin-bottom:18px; }
+  .upsell-feats { text-align:left; margin-bottom:20px; display:flex; flex-direction:column; gap:8px; }
+  .upsell-f { font-size:13px; color:var(--text-mid); display:flex; align-items:flex-start; gap:8px; }
+  .upsell-f .ck { color:var(--teal); flex-shrink:0; }
+  .upsell-btn {
+    background:linear-gradient(135deg, var(--blue), var(--teal));
+    color:#fff; border:none;
+    padding:16px 32px; font-size:16px;
+    font-family:'Sora',sans-serif;
+    font-weight:700; border-radius:100px;
+    cursor:pointer; width:100%;
+    transition:all 0.3s;
+    display:block; text-decoration:none; text-align:center;
+  }
+  .upsell-btn:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(51,136,255,0.3); }
+  .upsell-note {
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; color:var(--text-dim); margin-top:10px;
+  }
+
+  .dl-btn {
+    background:linear-gradient(135deg,var(--blue),var(--teal));
+    color:#fff; border:none;
+    padding:12px 24px; font-size:14px;
+    font-family:'Sora',sans-serif;
+    font-weight:600; border-radius:100px;
+    cursor:pointer; margin-top:6px;
+    transition:all 0.2s;
+  }
+  .dl-btn:hover { transform:translateY(-1px); box-shadow:0 8px 24px rgba(51,136,255,0.3); }
+
+  /* LIVE GAUGE — SVG based */
+  .gauge-container {
+    width:100%; display:flex; flex-direction:column;
+    align-items:center; margin-bottom:24px;
+    opacity:0; transition:opacity 0.5s;
+  }
+  .gauge-container.visible { opacity:1; }
+  .gauge-svg { width:220px; height:130px; overflow:visible; }
+  .gauge-score-num {
+    font-size:38px; font-weight:800;
+    transition:color 0.5s;
+    margin-top:0px;
+    line-height:1;
+  }
+  .gauge-risk-label {
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:2px;
+    text-transform:uppercase;
+    transition:color 0.5s;
+    margin-top:2px;
+  }
+  .gauge-hint {
+    font-size:11px; color:var(--text-dim);
+    margin-top:4px;
+  }
+
+  /* ANIM */
+  .fiu { animation:fu 0.5s ease forwards; }
+  @keyframes fu { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+  .d1{animation-delay:.07s;opacity:0} .d2{animation-delay:.14s;opacity:0}
+  .d3{animation-delay:.21s;opacity:0} .d4{animation-delay:.28s;opacity:0}
+  .d5{animation-delay:.35s;opacity:0}
+
+  @media(max-width:480px) {
+    .bdg{grid-template-columns:1fr 1fr}
+    .email-row{flex-direction:column}
+    .trust-row{gap:18px}
+    .card{padding:28px 16px}
+    .jgrid{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<!-- Hidden Netlify form for detection -->
+<form name="email-signups" netlify netlify-honeypot="bot-field" hidden>
+  <input type="email" name="email">
+  <input type="text" name="job-title">
+  <input type="number" name="risk-score">
+  <input type="text" name="risk-level">
+</form>
+<div class="orb o1"></div>
+<div class="orb o2"></div>
+
+<div class="wrap">
+
+  <!-- LANDING -->
+  <div id="s-land" class="s on">
+    <div class="badge fiu">Career Resilience Assessment</div>
+    <h1 class="fiu d1">How <span class="gr">AI-resilient</span> is your career?</h1>
+    <p class="sub fiu d2">Get a personalized score based on 2026 research analyzing 342 occupations. Understand where you stand — and what to do about it.</p>
+    <button class="btn-go fiu d3" onclick="go('s-job')">Get Your Free Score →</button>
+    <p class="note fiu d4">60 seconds · 100% free · No signup required</p>
+    <div class="trust-row fiu d5">
+      <div class="trust"><b>342</b><span>occupations scored</span></div>
+      <div class="trust"><b>$3.7T</b><span>in wages exposed</span></div>
+      <div class="trust"><b>2026</b><span>latest data</span></div>
+    </div>
+    <div class="src-note fiu d5">Karpathy/BLS · Anthropic Economic Index · Goldman Sachs · Microsoft · Wharton · Brookings</div>
+  </div>
+
+  <!-- JOB SELECT -->
+  <div id="s-job" class="s">
+    <div class="pbar-w"><div class="pbar" id="prog" style="width:8%"></div></div>
+    <div class="slbl">STEP 1 OF 7</div>
+    <div class="sq">What's your job?</div>
+    <div class="shint">Type your title for the most accurate score, or pick a category</div>
+    <div class="gauge-container" id="gauge-job">
+      <svg class="gauge-svg" viewBox="0 0 220 130">
+        <!-- Background track -->
+        <path d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="#1c1c2c" stroke-width="22" stroke-linecap="round"/>
+        <!-- Colored fill -->
+        <path id="ga-job" d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="#22dd77" stroke-width="22" stroke-linecap="round"
+              stroke-dasharray="283" stroke-dashoffset="283" style="transition: stroke-dashoffset 0.8s cubic-bezier(0.34,1.2,0.64,1), stroke 0.5s;"/>
+        <!-- Needle -->
+        <line id="gn-job" x1="110" y1="110" x2="110" y2="30" stroke="#eeeef3" stroke-width="3" stroke-linecap="round"
+              transform="rotate(-90,110,110)" style="transition: transform 0.8s cubic-bezier(0.34,1.4,0.64,1);"/>
+        <!-- Center dot -->
+        <circle cx="110" cy="110" r="7" fill="#eeeef3" stroke="#0e0e18" stroke-width="3"/>
+      </svg>
+      <div class="gauge-score-num" id="gs-job">—</div>
+      <div class="gauge-risk-label" id="gl-job">ENTER YOUR JOB</div>
+      <div class="gauge-hint" id="gh-job">Your score will appear here</div>
+    </div>
+    <div class="inp-w">
+      <input class="inp" id="job-input" type="text" placeholder="e.g. Accountant, Nurse, Marketing Manager..." autocomplete="off" autofocus>
+      <div class="ac" id="autocomplete"></div>
+    </div>
+    <button class="btn-go" id="go-btn" style="display:none;width:100%;margin-top:10px;font-size:15px;padding:15px 24px;" onclick="goWithInput()">Get My Score →</button>
+    <div class="divr">or pick a category</div>
+    <div class="jgrid" id="jgrid"></div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="s-quiz" class="s">
+    <div class="pbar-w"><div class="pbar" id="prog2"></div></div>
+    <div class="gauge-container visible" id="gauge-quiz">
+      <svg class="gauge-svg" viewBox="0 0 220 130">
+        <path d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="#1c1c2c" stroke-width="22" stroke-linecap="round"/>
+        <path id="ga-quiz" d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="#22dd77" stroke-width="22" stroke-linecap="round"
+              stroke-dasharray="283" stroke-dashoffset="283" style="transition: stroke-dashoffset 0.8s cubic-bezier(0.34,1.2,0.64,1), stroke 0.5s;"/>
+        <line id="gn-quiz" x1="110" y1="110" x2="110" y2="30" stroke="#eeeef3" stroke-width="3" stroke-linecap="round"
+              transform="rotate(-90,110,110)" style="transition: transform 0.8s cubic-bezier(0.34,1.4,0.64,1);"/>
+        <circle cx="110" cy="110" r="7" fill="#eeeef3" stroke="#0e0e18" stroke-width="3"/>
+      </svg>
+      <div class="gauge-score-num" id="gs-quiz" style="font-size:16px;color:var(--text-mid)">Analyzing...</div>
+      <div class="gauge-risk-label" id="gl-quiz">WATCH YOUR RISK LEVEL</div>
+      <div class="gauge-hint" id="gh-quiz">Each answer shifts the needle</div>
+    </div>
+    <div class="slbl" id="q-step"></div>
+    <div class="sq" id="q-text"></div>
+    <div class="opts" id="q-opts"></div>
+  </div>
+
+  <!-- ANALYZING -->
+  <div id="s-ana" class="s">
+    <div class="ana-t">CALCULATING YOUR SCORE</div>
+    <div class="abars" id="ana-bars"></div>
+    <div id="ana-steps"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="s-res" class="s"></div>
+</div>
+
+<script>
+// ==========================================
+// JOB DATA — 2025 research-backed scores
+// ==========================================
+const jobCats = [
+  {i:'💻',l:'Tech & Software',b:52},{i:'💰',l:'Finance & Accounting',b:62},
+  {i:'📊',l:'Marketing & Sales',b:55},{i:'⚖️',l:'Legal & Admin',b:68},
+  {i:'🏥',l:'Healthcare',b:18},{i:'🎨',l:'Creative & Design',b:45},
+  {i:'🏗️',l:'Trades & Construction',b:12},{i:'📦',l:'Operations & Logistics',b:48},
+  {i:'🎓',l:'Education',b:22},{i:'🍽️',l:'Hospitality & Service',b:20},
+  {i:'🏭',l:'Manufacturing',b:42},{i:'📞',l:'Customer Support',b:72},
+];
+
+// Scores blend: Karpathy/BLS 0-10 scale (March 2026), Anthropic observed exposure (March 2026),
+// Goldman Sachs, Microsoft AI applicability, Wharton Budget Model
+// Karpathy scores mapped to 0-100: jobs >$100K avg 6.7/10, <$35K avg 3.4/10
+// 42% of US jobs score 7+, representing 59.9M workers and $3.7T in wages
+const jdb = {
+  // VERY HIGH (Karpathy 9-10, our 85-97)
+  'medical transcriptionist':97,'transcriptionist':97,
+  'data entry clerk':92,'data entry':92,'telemarketer':90,
+  'bookkeeper':88,'bookkeeping clerk':88,
+  'accountant':85,'auditor':85,'accounting clerk':88,
+  'tax preparer':88,'credit analyst':82,'insurance underwriter':85,
+  'proofreader':85,'copy editor':82,
+  'legal secretary':82,'paralegal':80,'legal assistant':80,
+  'payroll clerk':85,'billing clerk':82,'accounts payable clerk':82,
+  'file clerk':90,'order clerk':82,'switchboard operator':90,
+
+  // HIGH (Karpathy 7-8, our 65-84)
+  'computer programmer':82,'programmer':82,'coder':82,
+  'software engineer':80,'software developer':80,'backend developer':78,
+  'full stack developer':80,'front end developer':76,'web developer':76,
+  'data scientist':74,'data analyst':78,'business analyst':74,
+  'financial analyst':80,'market research analyst':76,
+  'customer service representative':78,'customer service rep':78,
+  'call center agent':80,'receptionist':72,
+  'administrative assistant':74,'admin assistant':74,
+  'executive assistant':74,'office manager':70,
+  'graphic designer':76,'ui designer':74,'ux designer':68,'web designer':76,
+  'copywriter':76,'content writer':76,'technical writer':78,
+  'translator':80,'journalist':72,'reporter':72,'editor':74,
+  'seo specialist':74,'digital marketer':72,'marketing analyst':74,
+  'social media manager':70,
+  'hr coordinator':68,'hr assistant':72,'recruiter':68,
+  'qa tester':76,'quality assurance':74,
+  'logistics coordinator':68,'supply chain analyst':72,
+  'bank teller':74,'loan officer':68,
+  'travel agent':82,'medical coder':78,
+  'cashier':66,'retail cashier':66,
+  'lawyer':74,'attorney':74,
+  'secretaries':74,'secretary':74,
+  'advertising manager':74,'computer systems analyst':76,
+
+  // MODERATE (Karpathy 4-6, our 38-67)
+  'marketing manager':68,'brand manager':58,'marketing director':55,
+  'product manager':58,'project manager':58,'program manager':58,
+  'sales manager':58,'account manager':60,'account executive':62,
+  'sales representative':62,'sales rep':62,'retail salesperson':60,
+  'consultant':60,'management consultant':58,'strategy consultant':55,
+  'research analyst':64,'researcher':58,
+  'financial advisor':55,'financial planner':55,
+  'insurance agent':62,'real estate agent':58,
+  'architect':52,'interior designer':58,
+  'teacher':44,'professor':48,'lecturer':50,'tutor':52,
+  'engineer':50,'mechanical engineer':48,'civil engineer':44,
+  'electrical engineer':50,'chemical engineer':44,
+  'scientist':48,'lab technician':50,
+  'hr manager':58,'talent acquisition':64,
+  'operations manager':58,'warehouse manager':54,'inventory manager':58,
+  'photographer':52,'videographer':50,'filmmaker':48,
+  'musician':44,'artist':42,
+  'registered nurse':44,'nurse':44,
+  'doctor':42,'physician':42,'pharmacist':48,'radiologist':48,
+  'veterinarian':44,'police officer':42,'detective':44,
+  'devops engineer':72,'cloud engineer':70,
+
+  // LOW (Karpathy 1-3, our 8-37)
+  'nurse practitioner':38,
+  'surgeon':32,'dentist':36,
+  'therapist':30,'physical therapist':28,'occupational therapist':28,
+  'psychologist':34,'psychiatrist':34,'counselor':32,
+  'social worker':32,'healthcare social worker':28,
+  'emt':12,'paramedic':16,'firefighter':12,
+  'electrician':20,'plumber':14,'carpenter':16,'welder':20,
+  'hvac technician':16,'mechanic':22,'auto mechanic':22,
+  'construction worker':12,'construction laborer':10,'roofer':10,'mason':12,
+  'ironworker':10,'painter':14,
+  'personal trainer':22,'fitness instructor':24,
+  'childcare worker':16,'nanny':16,'daycare':16,
+  'barber':20,'hair stylist':20,'cosmetologist':20,
+  'massage therapist':16,'dental hygienist':24,
+  'nursing assistant':20,'home health aide':16,
+  'bartender':20,'waiter':22,'waitress':22,'server':22,
+  'chef':24,'cook':22,
+  'janitor':14,'cleaner':14,'housekeeper':16,
+  'grounds maintenance':10,'landscaper':12,
+  'pilot':40,'air traffic controller':32,
+  'ceo':36,'chief executive':36,'executive':40,
+  'judge':32,
+  'clergy':14,'pastor':14,
+  'farmer':24,'rancher':22,
+  'truck driver':16,'delivery driver':20,
+  'veterinary assistant':20,
+};
+
+// ==========================================
+// 25-CATEGORY × 6 QUESTIONS
+// Dimensions: AI Overlap, Judgment, Human Trust, Physical, Expertise, Adoption
+// Tailored language FIRST → 2 universal at END
+// ==========================================
+
+const universalQs = [
+  {text:"How much of your expertise comes from experience that can't be learned from a textbook?",cat:'expertise',
+    opts:[{text:"Not much — standard training covers it",val:90},{text:"Some — experience helps but isn't essential",val:62},{text:"A lot — years of pattern recognition and instinct",val:28},{text:"Everything — my judgment was built over a career",val:5}]},
+  {text:"How much has AI actually changed your day-to-day work in the last 12 months?",cat:'adopt',
+    opts:[{text:"Massively — I use AI tools every day now",val:93},{text:"Noticeably — I've started using some tools",val:62},{text:"Barely — I've tried it but it hasn't stuck",val:30},{text:"Not at all — AI hasn't touched my work yet",val:5}]}
+];
+
+const qSets = {
+
+'swe':[ // Software Engineering
+  {text:"What percentage of your typical code output could AI generate correctly today?",cat:'overlap',
+    opts:[{text:"80%+ — mostly standard patterns",val:95},{text:"40-80% — boilerplate yes, complex logic no",val:68},{text:"Under 40% — only the simplest parts",val:38},{text:"Almost none — my work is too novel and architectural",val:5}]},
+  {text:"When you hit a problem with no Stack Overflow answer, how do you solve it?",cat:'judgment',
+    opts:[{text:"I rarely hit those — most problems are well-documented",val:88},{text:"I research and combine known patterns",val:62},{text:"I design new approaches — that's the fun part",val:32},{text:"I invent from scratch — that's my entire value",val:5}]},
+  {text:"How much of your impact comes from understanding people and business context vs pure technical execution?",cat:'trust',
+    opts:[{text:"Almost all technical — I get specs and ship",val:85},{text:"Mostly technical with some context",val:60},{text:"Real blend — business understanding drives my decisions",val:30},{text:"More than half is people and context — code is secondary",val:5}]},
+  {text:"Could you do 100% of your job from a beach with a laptop?",cat:'physical',
+    opts:[{text:"Yes — and I basically do",val:88},{text:"Mostly — occasional in-person meetings help",val:62},{text:"Partially — on-site collaboration matters a lot",val:32},{text:"No — I work with hardware, labs, or physical systems",val:5}]}],
+
+'data':[ // Data & Analytics
+  {text:"Could AI generate your typical weekly deliverable if given access to the same data sources?",cat:'overlap',
+    opts:[{text:"Yes — it's mostly standard queries and dashboards",val:95},{text:"The raw output maybe — not the interpretation",val:68},{text:"Some basics — but my insights require deep context",val:35},{text:"No — my analysis requires expertise AI can't replicate",val:5}]},
+  {text:"How often does your analysis require judgment calls about what the data means vs just presenting it?",cat:'judgment',
+    opts:[{text:"Rarely — I pull numbers and format reports",val:90},{text:"Sometimes — I flag trends but others interpret",val:62},{text:"Regularly — my interpretation shapes decisions",val:30},{text:"That's my entire value — the data is useless without my read",val:5}]},
+  {text:"How much do stakeholders act on your work because they trust YOUR interpretation?",cat:'trust',
+    opts:[{text:"They just want the numbers — anyone could deliver them",val:85},{text:"My analysis is valued but not uniquely trusted",val:58},{text:"People specifically want my take on the data",val:28},{text:"Decisions don't happen without my sign-off",val:5}]},
+  {text:"Is your work 100% screen-based, or does it ever require being somewhere specific?",cat:'physical',
+    opts:[{text:"100% screen — location doesn't matter at all",val:88},{text:"Almost all screen with rare in-person meetings",val:62},{text:"Mix — some site visits or client meetings",val:32},{text:"Regularly on-site — I need to see the operation I'm analyzing",val:5}]}],
+
+'it':[ // IT & Cybersecurity
+  {text:"How much of your typical day could be handled by automated monitoring, scripts, and AI?",cat:'overlap',
+    opts:[{text:"Most of it — standard alerts and known fixes",val:92},{text:"A good portion — routine issues yes",val:65},{text:"Some — but novel problems need human investigation",val:35},{text:"Very little — I deal with unique, complex incidents",val:5}]},
+  {text:"When something breaks that's not in any runbook, how often does that happen?",cat:'judgment',
+    opts:[{text:"Rarely — we have docs for everything",val:88},{text:"Monthly — but I can usually figure it out",val:60},{text:"Weekly — creative troubleshooting is constant",val:30},{text:"Daily — my environment is inherently unpredictable",val:5}]},
+  {text:"How much do people in your org depend on YOU specifically when things go wrong?",cat:'trust',
+    opts:[{text:"Any IT person could handle it",val:82},{text:"I'm helpful but not irreplaceable",val:58},{text:"People ask for me — I know our systems deeply",val:28},{text:"I'm the single point of failure — if I'm out, things break",val:5}]},
+  {text:"How much of your work requires physical access — servers, hardware, cables, on-site?",cat:'physical',
+    opts:[{text:"None — fully cloud and remote",val:85},{text:"Occasionally — mostly remote",val:58},{text:"Regularly — data centers and physical devices",val:28},{text:"Primarily hands-on — hardware and infrastructure",val:5}]}],
+
+'finance':[ // Finance & Investment
+  {text:"If someone gave AI access to your Bloomberg terminal, data feeds, and models — how much of your work could it produce?",cat:'overlap',
+    opts:[{text:"Most of it — standard models and reporting",val:93},{text:"The quantitative output — not the judgment",val:65},{text:"Some number-crunching — but context is everything",val:35},{text:"Very little — my value is relationships and intuition",val:5}]},
+  {text:"How often do your recommendations come down to a judgment call the data alone doesn't answer?",cat:'judgment',
+    opts:[{text:"Rarely — the models are the recommendation",val:88},{text:"Sometimes — when results are ambiguous",val:60},{text:"Often — I weigh factors that aren't in any spreadsheet",val:28},{text:"Always — my gut, built over years, is what they pay for",val:5}]},
+  {text:"How much do people act on your work because they trust YOU vs just wanting the analysis?",cat:'trust',
+    opts:[{text:"They want the numbers — who delivers doesn't matter",val:85},{text:"My analysis is respected but not uniquely",val:60},{text:"People specifically value my perspective",val:28},{text:"My relationships and reputation ARE my career",val:5}]},
+  {text:"Is there any part of your job that requires being physically somewhere specific?",cat:'physical',
+    opts:[{text:"No — 100% remote-capable",val:85},{text:"Mostly remote — occasional office days",val:60},{text:"Some — client meetings and events matter",val:32},{text:"Regularly — trading floors, client sites, deal rooms",val:8}]}],
+
+'accounting':[ // Accounting & Tax
+  {text:"Could today's software and AI tools handle your most common deliverables — returns, reports, reconciliations?",cat:'overlap',
+    opts:[{text:"Yes — most of it is standardized",val:95},{text:"A lot of the routine work — but complex cases need me",val:68},{text:"Some basics — real expertise can't be automated yet",val:38},{text:"No — my work is highly specialized and judgment-heavy",val:5}]},
+  {text:"How often do you encounter situations where the rules are ambiguous and you need to make a call?",cat:'judgment',
+    opts:[{text:"Rarely — clear rules for almost everything",val:90},{text:"Occasionally — some gray areas",val:65},{text:"Regularly — tax law and accounting standards have real ambiguity",val:35},{text:"Constantly — that's specifically why clients pay me",val:5}]},
+  {text:"How much do your clients rely on your personal advice vs just needing someone to process their work?",cat:'trust',
+    opts:[{text:"They just need processing — I'm interchangeable",val:88},{text:"Some value my input but mostly need execution",val:62},{text:"They genuinely rely on my strategic advice",val:30},{text:"I'm their trusted advisor — they call me before making any financial decision",val:5}]},
+  {text:"Could your work be done entirely from a laptop anywhere in the world?",cat:'physical',
+    opts:[{text:"Yes — 100%",val:88},{text:"Almost — occasional in-person meetings",val:62},{text:"Partially — client visits and on-site audits matter",val:32},{text:"No — I need to be physically at client locations regularly",val:8}]}],
+
+'marketing':[ // Marketing & Advertising
+  {text:"If you asked AI to create your next campaign, content piece, or strategy deck — how usable would it be?",cat:'overlap',
+    opts:[{text:"Honestly? Pretty good — maybe 80% there",val:93},{text:"Decent starting point but needs my brand sense and strategy",val:65},{text:"Only a basic framework — the real thinking is all me",val:35},{text:"It wouldn't even know where to begin with what I do",val:5}]},
+  {text:"How much of your work requires reading cultural moments, audience sentiment, or market timing that data alone can't capture?",cat:'judgment',
+    opts:[{text:"Not much — I optimize based on metrics",val:85},{text:"Some — trends matter but data drives decisions",val:60},{text:"A lot — understanding culture is central to my strategy",val:28},{text:"That's my entire edge — I sense what's coming before the data shows it",val:5}]},
+  {text:"How much of your effectiveness comes from personal relationships — with partners, influencers, clients, or your team?",cat:'trust',
+    opts:[{text:"Not much — my channels are automated and scalable",val:82},{text:"Somewhat — a few key relationships help",val:58},{text:"A lot — relationships drive my best results",val:28},{text:"My network IS the marketing — without it I have nothing",val:5}]},
+  {text:"Could you do your job entirely remotely, or does it require being physically present?",cat:'physical',
+    opts:[{text:"100% remote — no question",val:85},{text:"Mostly remote — occasional events or meetings",val:60},{text:"Mix — in-person events, shoots, and meetings matter",val:32},{text:"Heavily in-person — events, activations, or field marketing",val:8}]}],
+
+'sales':[ // Sales & Business Development
+  {text:"Could an AI chatbot or automated sequence handle your typical initial customer interaction?",cat:'overlap',
+    opts:[{text:"Yes — it's mostly qualification questions and info sharing",val:93},{text:"The first touch maybe — but real selling needs me",val:65},{text:"Only the most basic inquiries — I sell through conversation",val:35},{text:"No way — my deals start with human connection from minute one",val:5}]},
+  {text:"How much of your close rate comes from reading the room, timing, and instinct vs following a playbook?",cat:'judgment',
+    opts:[{text:"Almost all playbook — follow the script and it works",val:88},{text:"Mostly process with some intuition",val:60},{text:"Real blend — but my best deals come from instinct",val:30},{text:"It's all feel — I know when to push, when to wait, when to walk",val:5}]},
+  {text:"How much does your personal reputation and trust drive your pipeline?",cat:'trust',
+    opts:[{text:"Not at all — leads come from the company",val:82},{text:"Somewhat — referrals help but company brand does most of the work",val:58},{text:"A lot — people buy because they know ME",val:28},{text:"Entirely — I AM the pipeline",val:5}]},
+  {text:"Does your sales process require any physical presence — demos, site visits, dinners?",cat:'physical',
+    opts:[{text:"No — everything is over Zoom and email",val:82},{text:"Mostly remote — occasional in-person helps",val:58},{text:"Regularly — face-to-face meetings are a real advantage",val:30},{text:"Essential — you don't close my deals over a screen",val:5}]}],
+
+'legal':[ // Legal
+  {text:"How much of your core work — research, document review, contract analysis — could AI legal tools handle today?",cat:'overlap',
+    opts:[{text:"Most of it — standard precedent and document review",val:93},{text:"The initial research — but I verify and think critically",val:65},{text:"Only basics — complex legal reasoning needs my brain",val:35},{text:"Very little — I do novel, high-stakes strategy work",val:5}]},
+  {text:"How often does your work require navigating ambiguity where the law itself doesn't give a clear answer?",cat:'judgment',
+    opts:[{text:"Rarely — the rules are clear for my practice area",val:85},{text:"Sometimes — occasional gray areas",val:60},{text:"Often — I advise on genuinely unsettled questions",val:28},{text:"Constantly — I'm shaping how the law develops",val:5}]},
+  {text:"How much does your effectiveness depend on persuasion, negotiation, or people trusting your counsel?",cat:'trust',
+    opts:[{text:"Not much — I work with documents behind the scenes",val:85},{text:"Somewhat — some client interaction",val:58},{text:"A lot — reading people and persuading is central to my role",val:25},{text:"That's my defining skill — I win by understanding people",val:5}]},
+  {text:"Does any part of your legal work require physical presence — courtroom, client sites, negotiations?",cat:'physical',
+    opts:[{text:"No — fully remote document work",val:85},{text:"Occasionally — some in-person meetings",val:60},{text:"Regularly — court appearances or on-site work",val:30},{text:"Frequently — I need to be in the room where it happens",val:5}]}],
+
+'hr':[ // HR & Recruiting
+  {text:"How much of your daily work — screening, scheduling, processing — could HR software and AI handle today?",cat:'overlap',
+    opts:[{text:"Most of it honestly",val:93},{text:"A lot of the administrative parts",val:65},{text:"Some basics — but the human judgment is all me",val:35},{text:"Very little — my work is deeply interpersonal and strategic",val:5}]},
+  {text:"How much does your role require reading between the lines — in interviews, conflicts, or organizational dynamics?",cat:'judgment',
+    opts:[{text:"Not much — I follow processes and checklists",val:85},{text:"Sometimes — standard situations with occasional nuance",val:60},{text:"Often — people dynamics are complex and I navigate them",val:28},{text:"That's my entire value — I understand people at a deep level",val:5}]},
+  {text:"How much do employees and leaders trust YOU personally — not just the HR function?",cat:'trust',
+    opts:[{text:"I'm seen as an admin function, not a person",val:82},{text:"People are polite but it's transactional",val:58},{text:"People genuinely trust and confide in me",val:28},{text:"I'm the person everyone calls when things are really hard",val:5}]},
+  {text:"Could your work be done fully remotely?",cat:'physical',
+    opts:[{text:"Yes — it's all digital",val:82},{text:"Mostly — occasional in-person meetings",val:58},{text:"Partially — being present builds trust and culture",val:30},{text:"No — I need to be physically present to read the organization",val:5}]}],
+
+'exec':[ // Executive & Management
+  {text:"If someone read all your emails, meeting notes, and Slack messages — would they capture your actual contribution?",cat:'overlap',
+    opts:[{text:"Pretty much — most of my work is written communication",val:82},{text:"A fair amount — but nuance gets lost",val:58},{text:"Some — but the real value happens in the room, unrecorded",val:30},{text:"Almost nothing — my impact is invisible on paper",val:5}]},
+  {text:"How much of your job is making calls where the right answer isn't obvious and reasonable people would disagree?",cat:'judgment',
+    opts:[{text:"Rarely — decisions are usually clear",val:72},{text:"Sometimes — occasional tough calls",val:50},{text:"Often — navigating ambiguity is a big part of my role",val:25},{text:"That's the whole job — I get paid to decide when nobody knows",val:5}]},
+  {text:"How much does your effectiveness depend on people trusting your vision and following your lead — not just your authority?",cat:'trust',
+    opts:[{text:"Mostly authority — I have positional power",val:68},{text:"Some influence beyond title",val:48},{text:"A lot — people follow me because they believe in me",val:22},{text:"Entirely — without trust, my title means nothing",val:5}]},
+  {text:"How much does your role require physically being present — reading rooms, walking floors, attending events?",cat:'physical',
+    opts:[{text:"Not at all — I lead remotely",val:72},{text:"Occasionally — some events and meetings",val:50},{text:"Regularly — presence matters for culture and morale",val:25},{text:"Essential — you can't lead this org from behind a screen",val:5}]}],
+
+'consulting':[ // Consulting & Strategy
+  {text:"Could a well-prompted AI create the first draft of your typical recommendation or deliverable?",cat:'overlap',
+    opts:[{text:"Yes — it's mostly applying known frameworks",val:93},{text:"A rough draft — but client context is everything",val:65},{text:"The structure maybe — not the strategic insight",val:35},{text:"No — my recommendations require deep original thinking",val:5}]},
+  {text:"How much does solving your clients' problems require creativity vs applying proven methodologies?",cat:'judgment',
+    opts:[{text:"Almost all methodology — I apply frameworks",val:85},{text:"Mostly method with some creative adaptation",val:60},{text:"Regular creative problem-solving",val:30},{text:"Every engagement is a puzzle with no existing playbook",val:5}]},
+  {text:"How much do clients hire your FIRM vs hire YOU specifically?",cat:'trust',
+    opts:[{text:"The firm — I'm a delivery resource",val:78},{text:"Mostly the firm but my expertise helps win work",val:55},{text:"Increasingly me — clients request me",val:28},{text:"They hire me — my name is why they signed the contract",val:5}]},
+  {text:"How much in-person presence does your consulting work require?",cat:'physical',
+    opts:[{text:"None — fully remote engagements",val:82},{text:"Some — occasional client visits",val:58},{text:"Regular — on-site work builds trust and understanding",val:30},{text:"Essential — I need to be embedded with the client",val:5}]}],
+
+'writing':[ // Writing & Content
+  {text:"Could AI produce a usable first draft of your typical writing?",cat:'overlap',
+    opts:[{text:"Yes — and honestly it's getting scary good",val:95},{text:"A rough draft — but it lacks my voice and depth",val:68},{text:"Only the skeleton — real writing needs original insight",val:38},{text:"No — my work requires reporting, experience, or expertise AI can't touch",val:5}]},
+  {text:"How much does your best writing depend on original reporting, personal experience, or ideas nobody else has?",cat:'judgment',
+    opts:[{text:"Not much — I synthesize and repackage existing info",val:88},{text:"Some — occasional original angles",val:60},{text:"A lot — my perspective and sources are unique",val:28},{text:"That's literally all that matters — without originality I have nothing",val:5}]},
+  {text:"How much does your audience care that it's YOU writing — your name, your voice, your credibility?",cat:'trust',
+    opts:[{text:"They don't care who wrote it",val:85},{text:"Brand matters more than my name",val:60},{text:"My byline carries weight",val:28},{text:"People read it BECAUSE I wrote it",val:5}]},
+  {text:"Could your writing process work from anywhere, or does it require being in specific places?",cat:'physical',
+    opts:[{text:"Anywhere with wifi",val:85},{text:"Mostly remote — occasional in-person research",val:60},{text:"Partially — I need access to sources, events, or locations",val:32},{text:"Heavily location-dependent — my beat requires being there",val:8}]}],
+
+'design':[ // Design & Creative
+  {text:"If you fed your recent projects into AI design tools — how close could they get to what you produce?",cat:'overlap',
+    opts:[{text:"Uncomfortably close",val:93},{text:"Decent approximation — but missing my style and thinking",val:65},{text:"Superficially similar, fundamentally different",val:35},{text:"Not remotely — my work requires true human creativity",val:5}]},
+  {text:"How much does your best work come from taste, instinct, and cultural awareness vs following a brief?",cat:'judgment',
+    opts:[{text:"I mostly follow briefs and guidelines",val:85},{text:"Briefs guide me but I add creative judgment",val:60},{text:"My taste and instinct are a big differentiator",val:28},{text:"My entire value IS my taste — you're hiring my eye",val:5}]},
+  {text:"How much does your work depend on understanding the end user's emotions and behavior?",cat:'trust',
+    opts:[{text:"Not much — I execute visual specs",val:80},{text:"Somewhat — I consider the audience",val:55},{text:"A lot — empathy drives my design decisions",val:25},{text:"Everything — I design for humans, not screens",val:5}]},
+  {text:"How much physical craft — hands, tools, spatial sense — goes into your work?",cat:'physical',
+    opts:[{text:"None — fully digital",val:85},{text:"Some — I think spatially but work digitally",val:58},{text:"A lot — physical materials, prototypes, or spaces",val:28},{text:"Central — my craft is fundamentally physical",val:5}]}],
+
+'realestate':[ // Real Estate & Insurance
+  {text:"How much of your job could already be handled by Zillow, AI tools, or automated platforms?",cat:'overlap',
+    opts:[{text:"A lot — the data and listings are all online now",val:85},{text:"Some — but local context and expertise matter",val:60},{text:"Minimally — my value is relationships and judgment",val:32},{text:"Not at all — my work is irreducibly human",val:5}]},
+  {text:"How often do your deals involve emotional complexity — nervous buyers, difficult negotiations, life-changing decisions?",cat:'judgment',
+    opts:[{text:"Rarely — straightforward transactions",val:72},{text:"Sometimes — occasional emotional situations",val:50},{text:"Often — every deal has a human drama element",val:25},{text:"Always — I'm guiding people through their biggest financial moments",val:5}]},
+  {text:"How much does your business depend on people specifically trusting YOU?",cat:'trust',
+    opts:[{text:"Not much — they found me online",val:78},{text:"Somewhat — referrals help",val:55},{text:"A lot — my reputation drives my business",val:25},{text:"Entirely — people choose me because of years of trust",val:5}]},
+  {text:"How much of your work requires being physically present?",cat:'physical',
+    opts:[{text:"Not much — mostly digital and phone",val:72},{text:"Some — occasional property visits",val:50},{text:"Regularly — showings, inspections, closings",val:25},{text:"Constantly — I need to be at every property",val:5}]}],
+
+'hc_clinical':[ // Clinical Healthcare
+  {text:"How much of your clinical documentation and charting could AI generate accurately from your verbal notes?",cat:'overlap',
+    opts:[{text:"Almost all — standardized forms and codes",val:88},{text:"A lot — routine notes yes",val:62},{text:"Some — but clinical reasoning sections need my brain",val:32},{text:"Very little — my documentation requires nuanced judgment",val:5}]},
+  {text:"How often do you make a clinical call that the textbook or protocol doesn't cover — where it's just your experience?",cat:'judgment',
+    opts:[{text:"Rarely — I follow protocols closely",val:82},{text:"Occasionally — unusual presentations",val:55},{text:"Regularly — every patient is different",val:25},{text:"Constantly — I handle cases nobody's written about",val:3}]},
+  {text:"How much does a patient's outcome depend on them trusting YOU — not just the treatment plan?",cat:'trust',
+    opts:[{text:"Not much — I work behind the scenes",val:72},{text:"Somewhat — rapport helps compliance",val:48},{text:"A lot — trust drives treatment adherence",val:20},{text:"Fundamentally — healing requires human connection",val:3}]},
+  {text:"What percentage of your shift requires your physical hands on a patient?",cat:'physical',
+    opts:[{text:"Very little — mostly screens and documentation",val:75},{text:"Some — mixed with desk work",val:48},{text:"Most of it — hands-on clinical care",val:18},{text:"Virtually 100% — I can't do my job without physical touch",val:3}]}],
+
+'hc_admin':[ // Healthcare Admin & Billing
+  {text:"Could AI medical coding or billing tools handle your typical workload today?",cat:'overlap',
+    opts:[{text:"Most of it — standard cases and codes",val:95},{text:"A lot — routine cases yes",val:68},{text:"Some basics — but complex cases absolutely need me",val:38},{text:"Very little — I handle the edge cases machines get wrong",val:5}]},
+  {text:"How much of your work involves judgment calls vs following clear coding rules?",cat:'judgment',
+    opts:[{text:"Almost entirely rules — look up the code, enter it",val:90},{text:"Mostly rules with occasional interpretation",val:65},{text:"Regular judgment — complex cases need my expertise",val:35},{text:"Constant gray areas — I navigate ambiguity all day",val:8}]},
+  {text:"How much do providers and patients rely on you personally to get things right?",cat:'trust',
+    opts:[{text:"I'm a cog in the machine — anyone could do this",val:85},{text:"People appreciate my accuracy but don't depend on ME",val:60},{text:"People come to me with the hard cases because they trust me",val:30},{text:"I'm the person who keeps the whole billing operation running",val:5}]},
+  {text:"Could your work be done from anywhere with a computer?",cat:'physical',
+    opts:[{text:"Yes — 100% remote",val:88},{text:"Almost — occasional in-office needs",val:62},{text:"Partially — on-site presence helps with provider communication",val:32},{text:"Need to be in the office — paper records, physical files, face-to-face",val:5}]}],
+
+'education':[ // Education & Training
+  {text:"How much of what you teach could a well-designed AI tutor deliver to your students?",cat:'overlap',
+    opts:[{text:"A lot — I mainly deliver standard curriculum content",val:82},{text:"The information maybe — but not the way I teach it",val:55},{text:"Only the basics — real teaching requires reading the room",val:28},{text:"Almost nothing — what I do is fundamentally human",val:5}]},
+  {text:"How much do you improvise and adapt in the moment based on how your students are responding?",cat:'judgment',
+    opts:[{text:"Rarely — I follow my lesson plans closely",val:78},{text:"Sometimes — I adjust pacing and examples",val:52},{text:"Often — every session evolves based on the room",val:25},{text:"Constantly — I throw out the plan and meet them where they are",val:5}]},
+  {text:"How much does your impact depend on students trusting you, not just learning from you?",cat:'trust',
+    opts:[{text:"Not much — I deliver content and assess",val:68},{text:"Somewhat — rapport helps engagement",val:48},{text:"A lot — students open up and learn more because they trust me",val:22},{text:"Everything — I change lives through relationships, not lectures",val:3}]},
+  {text:"How much of your job requires being physically present with your students?",cat:'physical',
+    opts:[{text:"Not necessarily — I could teach online",val:68},{text:"Helps — but online works in a pinch",val:48},{text:"Important — physical presence improves my teaching significantly",val:25},{text:"Essential — you cannot do what I do through a screen",val:5}]}],
+
+'support':[ // Customer Support
+  {text:"What percentage of the questions you handle every day could a well-trained chatbot resolve?",cat:'overlap',
+    opts:[{text:"80%+ — it's mostly the same questions",val:95},{text:"50-80% — routine ones yes, complex ones no",val:68},{text:"20-50% — only the most basic",val:38},{text:"Under 20% — my customers need real human problem-solving",val:8}]},
+  {text:"How often do you need to go off-script, get creative, or escalate because the standard answer doesn't work?",cat:'judgment',
+    opts:[{text:"Almost never — the playbook handles everything",val:90},{text:"Occasionally — when things get complicated",val:62},{text:"Regularly — I find creative solutions to unique problems",val:32},{text:"That's most of my day — every case is different",val:5}]},
+  {text:"How much do customers care that they're talking to a real person who understands them?",cat:'trust',
+    opts:[{text:"They just want a fast answer — don't care who provides it",val:85},{text:"Being human helps but isn't essential",val:60},{text:"A lot — empathy and patience make a real difference",val:28},{text:"That's the whole point — they need someone who truly cares",val:5}]},
+  {text:"Is your support work 100% remote/digital, or does any of it require being on-site?",cat:'physical',
+    opts:[{text:"100% remote — phone, chat, or email",val:85},{text:"Mostly remote — occasional in-person",val:60},{text:"Mix — some face-to-face support needed",val:32},{text:"Primarily in-person — I support people on-site",val:8}]}],
+
+'hospitality':[ // Hospitality & Food Service
+  {text:"How much of your job is following a set procedure vs creating a memorable human experience?",cat:'overlap',
+    opts:[{text:"Almost all procedure — follow the steps",val:68},{text:"Mostly procedure with personal touches",val:48},{text:"A real blend — the personal element matters a lot",val:25},{text:"I AM the experience — my personality makes it special",val:5}]},
+  {text:"How much does your work require reading people — their mood, needs, preferences — in real time?",cat:'judgment',
+    opts:[{text:"Not much — standard service interactions",val:62},{text:"Sometimes — I adjust my approach",val:42},{text:"Often — every customer needs something different",val:20},{text:"Always — I'm reading and reacting every second of my shift",val:3}]},
+  {text:"How much do repeat customers come back because of YOU specifically?",cat:'trust',
+    opts:[{text:"They don't — customers are random",val:62},{text:"A little — some familiar faces",val:42},{text:"A lot — regulars ask for me",val:20},{text:"Entirely — my following IS the business",val:3}]},
+  {text:"How physically demanding is your average day?",cat:'physical',
+    opts:[{text:"Light — mostly standing or sitting",val:52},{text:"Moderate — on my feet and moving",val:35},{text:"Hard — constant physical activity for hours",val:15},{text:"Intense — it's an athletic event every shift",val:3}]}],
+
+'personal':[ // Personal Services — salon, fitness, childcare
+  {text:"How much could technology or a robot handle the physical service you provide?",cat:'overlap',
+    opts:[{text:"Some of it — simple, standardized tasks",val:55},{text:"A little — but the human touch is most of it",val:38},{text:"Almost nothing — my work is intimate and physical",val:18},{text:"Zero — this requires a human being, period",val:3}]},
+  {text:"How much does your quality depend on reading the client's needs, mood, and preferences?",cat:'judgment',
+    opts:[{text:"Not much — standard service every time",val:60},{text:"Some — I adjust to preferences",val:42},{text:"A lot — every client gets a personalized experience",val:20},{text:"That IS my skill — I know what they need before they do",val:3}]},
+  {text:"How much do your clients specifically choose YOU over someone else who does the same thing?",cat:'trust',
+    opts:[{text:"They don't — I'm interchangeable",val:62},{text:"Somewhat — convenience matters more",val:42},{text:"A lot — they're loyal to me",val:20},{text:"100% — they'd follow me anywhere",val:3}]},
+  {text:"How much of your work absolutely requires your physical hands and presence?",cat:'physical',
+    opts:[{text:"Some could be done remotely surprisingly",val:52},{text:"Most requires presence",val:32},{text:"Nearly all — I need to be there physically",val:12},{text:"100% — direct physical human contact every moment",val:3}]}],
+
+'trades':[ // Skilled Trades & Construction
+  {text:"How often does a job go exactly as planned from start to finish?",cat:'overlap',
+    opts:[{text:"Almost always — very standardized",val:58},{text:"Usually — minor adjustments needed",val:40},{text:"Sometimes — every job has surprises",val:20},{text:"Rarely — I'm constantly adapting to what I find",val:3}]},
+  {text:"How much does your work require assessing conditions that no camera, scan, or blueprint can show you?",cat:'judgment',
+    opts:[{text:"Not much — the plans cover everything",val:52},{text:"Some — I verify things on-site",val:38},{text:"A lot — I rely on touch, sound, and experience",val:18},{text:"Constantly — my senses detect what no technology can",val:3}]},
+  {text:"How much do customers depend on YOUR expert diagnosis of what needs to be done?",cat:'trust',
+    opts:[{text:"Not much — they know what they want",val:55},{text:"Some — I make recommendations",val:38},{text:"A lot — they trust my judgment completely",val:20},{text:"100% — they have no idea what's wrong, I'm the expert",val:5}]},
+  {text:"If your work was done incorrectly, how serious would the consequences be?",cat:'physical',
+    opts:[{text:"Minor — cosmetic or easily fixable",val:48},{text:"Moderate — could cause damage",val:32},{text:"Serious — safety hazard",val:12},{text:"Potentially life-threatening",val:3}]}],
+
+'manufacturing':[ // Manufacturing & Production
+  {text:"How much of your role is monitoring automated processes vs hands-on making things?",cat:'overlap',
+    opts:[{text:"Almost all monitoring screens",val:78},{text:"Mix of monitoring and hands-on",val:52},{text:"Mostly hands-on with some machine oversight",val:25},{text:"Entirely manual craftsmanship",val:5}]},
+  {text:"When something goes wrong on the line that's not in any manual, how do you figure it out?",cat:'judgment',
+    opts:[{text:"Rarely happens — documented fixes for everything",val:72},{text:"Sometimes — but familiar patterns help",val:50},{text:"Regularly — intuition from years of experience",val:25},{text:"That's my value — I troubleshoot what nobody else can",val:5}]},
+  {text:"How much does product quality depend on YOUR trained judgment vs what instruments measure?",cat:'trust',
+    opts:[{text:"Instruments catch everything — I just verify",val:75},{text:"I occasionally spot what automation misses",val:52},{text:"My eye is essential — I catch things machines can't",val:25},{text:"Quality IS my craft — it's an art, not a measurement",val:5}]},
+  {text:"How physically demanding and potentially dangerous is your work?",cat:'physical',
+    opts:[{text:"Not very — clean, safe environment",val:58},{text:"Some hazards — standard precautions",val:40},{text:"Significant — heavy equipment, chemicals, or heights",val:18},{text:"High risk every day — one mistake means serious consequences",val:3}]}],
+
+'transport':[ // Transportation & Delivery
+  {text:"How much of your daily driving or route could an autonomous vehicle handle today?",cat:'overlap',
+    opts:[{text:"A lot — simple, repetitive routes",val:62},{text:"Some — but conditions vary too much",val:42},{text:"Very little — my routes require constant human judgment",val:22},{text:"None — my environment is far too unpredictable",val:5}]},
+  {text:"How much does your job require adapting to unexpected situations — weather, breakdowns, difficult conditions?",cat:'judgment',
+    opts:[{text:"Rarely — predictable conditions",val:55},{text:"Sometimes — occasional challenges",val:40},{text:"Often — I problem-solve on every trip",val:22},{text:"Constantly — nothing ever goes as planned",val:5}]},
+  {text:"How much does your role involve interacting with people — customers, passengers, dispatchers?",cat:'trust',
+    opts:[{text:"Almost none — solo work",val:60},{text:"Brief interactions — handoffs and check-ins",val:42},{text:"Regular — customer service is part of it",val:22},{text:"Constant — I'm with people all day",val:5}]},
+  {text:"How much physical labor beyond driving is involved?",cat:'physical',
+    opts:[{text:"None — just driving",val:52},{text:"Some — light loading or inspections",val:38},{text:"Regular — significant physical work",val:20},{text:"Heavy labor every day",val:5}]}],
+
+'govt':[ // Government & Public Sector
+  {text:"How much of your paperwork, reporting, and standard processes could AI auto-generate today?",cat:'overlap',
+    opts:[{text:"Almost all — standard forms and templates",val:85},{text:"A lot — routine documentation",val:62},{text:"Some — but context and judgment matter",val:35},{text:"Very little — my work requires sensitive nuanced judgment",val:8}]},
+  {text:"How much does your role require navigating political dynamics, stakeholder interests, and institutional complexity?",cat:'judgment',
+    opts:[{text:"Not at all — I follow clear directives",val:72},{text:"Somewhat — I'm aware of the landscape",val:50},{text:"A lot — organizational navigation is essential",val:25},{text:"That's half the job — politics IS strategy here",val:5}]},
+  {text:"How much does public trust or community relationships matter for your role's effectiveness?",cat:'trust',
+    opts:[{text:"Not at all — internal backend work",val:75},{text:"Somewhat — some public interaction",val:52},{text:"A lot — community trust is important",val:25},{text:"Everything — without public trust I can't function",val:5}]},
+  {text:"Does your role require physical presence — offices, field work, public-facing locations?",cat:'physical',
+    opts:[{text:"No — fully remote capable",val:75},{text:"Mostly remote — some office time",val:52},{text:"Regularly on-site — presence matters",val:28},{text:"Always — field work, inspections, or public-facing",val:5}]}],
+
+'opschain':[ // Operations & Logistics
+  {text:"How much of your typical day could be handled by dashboards, automated alerts, and AI optimization?",cat:'overlap',
+    opts:[{text:"Most of it — I mainly monitor and report",val:88},{text:"A good portion — routine tracking yes",val:62},{text:"Some — but real-time decisions need me",val:35},{text:"Very little — my job is managing chaos humans create",val:5}]},
+  {text:"When something goes wrong in your operation, how predictable is the solution?",cat:'judgment',
+    opts:[{text:"Very — we have procedures for everything",val:85},{text:"Usually — familiar problems have known fixes",val:58},{text:"It depends — every disruption plays out differently",val:30},{text:"Rarely — I navigate novel crises that nobody planned for",val:5}]},
+  {text:"How much do your relationships with vendors, partners, or teams keep the operation running?",cat:'trust',
+    opts:[{text:"Not much — systems handle it",val:78},{text:"Some key contacts matter",val:55},{text:"A lot — my network keeps everything moving",val:28},{text:"Relationships ARE the operation — without them it collapses",val:5}]},
+  {text:"How much does your role require being physically present to see the operation?",cat:'physical',
+    opts:[{text:"Not at all — fully remote and digital",val:82},{text:"Sometimes — occasional site visits",val:58},{text:"Regularly — I need to walk the floor to understand issues",val:28},{text:"Always — you can't manage this operation from a desk",val:5}]}]
+
+};
+
+// === ROUTING ===
+
+const catKeywords = {
+  'swe':['software engineer','software developer','backend','frontend','front end','full stack','fullstack','devops','mobile developer','ios dev','android dev','web developer','web dev','react developer','python developer','java developer','qa engineer','sdet','site reliability'],
+  'data':['data analyst','data scientist','data engineer','business intelligence','bi analyst','analytics manager','machine learning','ml engineer','statistician','quantitative'],
+  'it':['it ','information technology','sysadmin','system admin','network admin','network engineer','cybersecurity','security analyst','security engineer','helpdesk','help desk','it support','it manager','infrastructure','desktop support','cloud engineer','cloud architect'],
+  'finance':['financial analyst','investment bank','portfolio manager','wealth manager','trader','banker','financial advisor','financial planner','hedge fund','private equity','venture capital','asset manager','equity research','risk analyst','treasury','fund manager'],
+  'accounting':['accountant','auditor','bookkeeper','tax preparer','tax ','cpa','accounting','payroll clerk','billing clerk','accounts payable','accounts receivable','controller','staff accountant','senior accountant'],
+  'marketing':['marketing','advertising','brand manager','digital market','social media manager','seo','content market','demand gen','growth market','pr manager','public relations','communications manager','email market','media buyer'],
+  'sales':['sales rep','sales manager','account executive','business development','bdr','sdr','account manager','sales engineer','inside sales','outside sales','territory','sales director','enterprise sales'],
+  'legal':['lawyer','attorney','paralegal','legal assistant','legal secretary','counsel','compliance officer','compliance manager','contract manager','judge','court'],
+  'hr':['human resources','hr ','recruiter','talent acquisition','people ops','hr manager','hr coordinator','hr business partner','compensation','benefits admin','hr director','hr generalist'],
+  'exec':['ceo','cfo','cto','coo','cmo','chief','vp ','vice president','director of','executive director','president','managing director','partner','general manager','head of','svp','evp'],
+  'consulting':['consultant','management consultant','strategy consultant','advisory','deloitte','mckinsey','bcg','bain','accenture'],
+  'writing':['writer','editor','journalist','reporter','copywriter','content writer','technical writer','author','blogger','copy editor','proofreader','content creator','speechwriter'],
+  'design':['graphic designer','ui designer','ux designer','product designer','art director','creative director','animator','illustrator','motion designer','visual designer','brand designer','interior designer','industrial designer'],
+  'realestate':['real estate','realtor','property manager','mortgage','insurance agent','insurance broker','underwriter','claims adjuster','appraiser','loan officer'],
+  'hc_clinical':['nurse','doctor','physician','surgeon','therapist','dentist','pharmacist','emt','paramedic','clinical','veterinar','psycholog','psychiatr','counselor','radiolog','physical therapist','occupational therapist','dental hygienist','nursing','physician assistant','nurse practitioner','optometrist','chiropractor'],
+  'hc_admin':['medical coder','medical biller','health admin','medical record','medical transcription','medical office','health information','claims process','medical secretary','medical assistant','patient coordinator'],
+  'education':['teacher','professor','lecturer','tutor','instructor','principal','dean','education','school','academic','substitute','special education','school counselor','curriculum','training manager','corporate trainer','adjunct','postdoc'],
+  'support':['customer service','call center','support agent','client service','customer success','technical support','service desk','customer support'],
+  'hospitality':['waiter','waitress','server','bartender','chef','cook','sous chef','hotel','restaurant manager','concierge','front desk agent','catering','kitchen manager','food service','sommelier'],
+  'personal':['barber','hair stylist','cosmetologist','nail tech','esthetician','massage therapist','personal trainer','fitness instructor','childcare','nanny','daycare','dog walker','pet groomer','cleaning','maid','janitor','custodian','home health aide','caregiver'],
+  'trades':['electrician','plumber','carpenter','welder','hvac','mechanic','roofer','mason','painter','construction','ironwork','landscaper','installer','foreman','auto mechanic','pipefitter','crane operator','heavy equipment'],
+  'manufacturing':['manufactur','factory','production worker','production manager','assembly','assembler','machinist','quality control','quality inspector','plant manager','machine operator','cnc','fabricat','warehouse worker','forklift'],
+  'transport':['truck driver','delivery driver','courier','cdl','bus driver','pilot','freight','dispatcher','uber driver','lyft','taxi','chauffeur','flight attendant','mail carrier','route driver'],
+  'govt':['government','federal employee','state employee','city employee','public sector','civil servant','policy analyst','military','diplomat','regulator','inspector','social worker','case worker','park ranger','corrections officer','probation','city manager'],
+  'opschain':['operations manager','operations director','supply chain','logistics manager','warehouse manager','inventory','procurement','fleet manager','dispatch','process improvement','distribution','fulfillment','operations analyst']
+};
+
+const tileMap = {
+  'Tech & Software':'swe',
+  'Finance & Accounting':'finance',
+  'Marketing & Sales':'marketing',
+  'Legal & Admin':'legal',
+  'Healthcare':'hc_clinical',
+  'Creative & Design':'design',
+  'Trades & Construction':'trades',
+  'Operations & Logistics':'opschain',
+  'Education':'education',
+  'Hospitality & Service':'hospitality',
+  'Manufacturing':'manufacturing',
+  'Customer Support':'support'
+};
+
+function detectCategory(jobTitle){
+  const t = jobTitle.toLowerCase();
+  if(tileMap[jobTitle]) return tileMap[jobTitle];
+  for(const [cat, keywords] of Object.entries(catKeywords)){
+    if(keywords.some(k => t.includes(k))) return cat;
+  }
+  return null;
+}
+
+function buildQuestions(jobTitle){
+  const cat = detectCategory(jobTitle);
+  const specific = cat && qSets[cat] ? qSets[cat] : [
+    {text:"How much of your core work output could AI produce today?",cat:'overlap',opts:[{text:"Most of it",val:90},{text:"A good portion",val:65},{text:"Some basics only",val:35},{text:"Almost nothing",val:5}]},
+    {text:"How much does your job require judgment calls where there's no clear right answer?",cat:'judgment',opts:[{text:"Rarely",val:85},{text:"Sometimes",val:60},{text:"Often",val:30},{text:"That's the whole job",val:5}]},
+    {text:"How much does your effectiveness depend on people trusting you personally?",cat:'trust',opts:[{text:"Not at all",val:82},{text:"Somewhat",val:58},{text:"A lot",val:28},{text:"Everything depends on it",val:5}]},
+    {text:"Could your job be done entirely from a laptop?",cat:'physical',opts:[{text:"Yes — 100%",val:85},{text:"Mostly",val:58},{text:"Partially",val:30},{text:"No — requires physical presence",val:5}]}
+  ];
+  // Tailored FIRST, universal at END
+  return [...specific, universalQs[0], universalQs[1]];
+}
+
+let questions = [];
+// STATE
+let selJob=null, baseScore=50, ans=[], qI=0, lastScore=0, lastRisk='', liveScore=0, shareImageBlob=null;
+
+function gaugeColor(s){
+  if(s<=25) return '#22dd77';
+  if(s<=50) return '#ffcc00';
+  if(s<=72) return '#ff7733';
+  return '#ff3344';
+}
+function gaugeLabel(s){
+  if(s<=25) return 'HIGHLY RESILIENT';
+  if(s<=50) return 'MODERATE RISK';
+  if(s<=72) return 'ELEVATED RISK';
+  return 'HIGH RISK';
+}
+function updateGauge(prefix, score, hint, hideNumber){
+  // SVG semicircle arc length = π * 90 ≈ 282.74
+  // stroke-linecap round adds ~11px visual (half stroke-width on each end)
+  // so we reduce effective fill slightly to compensate
+  const arcLength = 282.74;
+  const capOffset = 11; // visual overshoot from round caps
+  const effectiveLength = arcLength - capOffset;
+  const fillAmount = (score / 100) * effectiveLength;
+  const dashOffset = arcLength - fillAmount;
+  const needleAngle = -90 + (score / 100) * 180;
+  
+  const arc = document.getElementById('ga-'+prefix);
+  const needle = document.getElementById('gn-'+prefix);
+  const num = document.getElementById('gs-'+prefix);
+  const lbl = document.getElementById('gl-'+prefix);
+  const hintEl = document.getElementById('gh-'+prefix);
+  const c = gaugeColor(score);
+  
+  if(arc){
+    arc.style.strokeDashoffset = dashOffset;
+    arc.style.stroke = c;
+  }
+  
+  if(needle) needle.setAttribute('transform', `rotate(${needleAngle},110,110)`);
+  
+  if(num && !hideNumber){ num.textContent=score; num.style.color=c; num.style.fontSize='38px'; }
+  if(num && hideNumber){
+    num.style.fontSize='16px';
+    if(score<=25){ num.textContent='Looking safe...'; num.style.color=c; }
+    else if(score<=50){ num.textContent='Hmm...'; num.style.color=c; }
+    else if(score<=72){ num.textContent='Getting risky...'; num.style.color=c; }
+    else { num.textContent='Uh oh...'; num.style.color=c; }
+  }
+  if(lbl && !hideNumber){ lbl.textContent=gaugeLabel(score); lbl.style.color=c; }
+  if(lbl && hideNumber){ lbl.textContent=''; }
+  if(hintEl && hint) hintEl.textContent=hint;
+  liveScore=score;
+}
+function calcLive(){
+  // 20% base score, 80% from quiz (each of 7 questions ~11.4% weight)
+  const perQ=0.125;
+  let weighted=baseScore*0.25;
+  ans.forEach(a=>{
+    weighted+=a.val*perQ;
+  });
+  const remaining=(6-ans.length)*perQ;
+  if(remaining>0) weighted+=baseScore*remaining;
+  return Math.round(Math.min(97,Math.max(5,weighted)));
+}
+
+function go(id){
+  document.querySelectorAll('.s').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// JOB SELECT
+function initJob(){
+  const g=document.getElementById('jgrid');
+  g.innerHTML='';
+  jobCats.forEach(c=>{
+    const d=document.createElement('div');
+    d.className='jtile';
+    d.setAttribute('tabindex','-1');
+    d.innerHTML=`<div class="ji">${c.i}</div><div class="jl">${c.l}</div>`;
+    d.onclick=()=>pickCat(c);
+    g.appendChild(d);
+  });
+
+  const inp=document.getElementById('job-input');
+  const ac=document.getElementById('autocomplete');
+
+  inp.addEventListener('input',()=>{
+    const v=inp.value.toLowerCase().trim();
+    const goBtn=document.getElementById('go-btn');
+    const gaugeEl=document.getElementById('gauge-job');
+    if(v.length>=2){
+      goBtn.style.display='block';
+      // Show and update gauge with preview score
+      gaugeEl.classList.add('visible');
+      const previewScore=jdb[v]||estScore(v);
+      updateGauge('job', previewScore, 'Based on job title — quiz will refine this');
+    }else{
+      goBtn.style.display='none';
+      gaugeEl.classList.remove('visible');
+    }
+    ac.innerHTML='';
+    if(v.length<2){ac.style.display='none';return;}
+    const m=Object.keys(jdb).filter(k=>k.includes(v)).slice(0,6);
+    if(!m.length){
+      const it=document.createElement('div');
+      it.className='ac-i';
+      it.textContent=`Use "${inp.value}" →`;
+      it.onclick=()=>pickJob(inp.value,estScore(v));
+      ac.appendChild(it);
+    } else {
+      m.forEach(k=>{
+        const it=document.createElement('div');
+        it.className='ac-i';
+        const name=k.split(' ').map(w=>w[0].toUpperCase()+w.slice(1)).join(' ');
+        it.textContent=name;
+        it.onclick=()=>pickJob(name,jdb[k]);
+        ac.appendChild(it);
+      });
+    }
+    ac.style.display='block';
+  });
+
+  inp.addEventListener('keydown',e=>{
+    if(e.key==='Enter'&&inp.value.trim().length>0){
+      const v=inp.value.toLowerCase().trim();
+      pickJob(inp.value,jdb[v]||estScore(v));
+    }
+  });
+
+  document.addEventListener('click',e=>{
+    if(!e.target.closest('.inp-w'))ac.style.display='none';
+  });
+}
+
+function estScore(t){
+  const words=t.toLowerCase().split(/\s+/);
+  
+  // Keyword map: common words → relevant job keys to check
+  const keywordMap = {
+    'process':['operations manager','project manager','business analyst','logistics coordinator','supply chain analyst'],
+    'improvement':['operations manager','management consultant','business analyst','project manager'],
+    'manager':['operations manager','marketing manager','sales manager','hr manager','product manager','project manager','warehouse manager'],
+    'director':['marketing director','executive','operations manager'],
+    'analyst':['data analyst','financial analyst','business analyst','market research analyst','research analyst','supply chain analyst'],
+    'engineer':['software engineer','mechanical engineer','civil engineer','electrical engineer','chemical engineer','devops engineer'],
+    'developer':['software developer','web developer','front end developer','backend developer','full stack developer'],
+    'admin':['administrative assistant','office manager','executive assistant'],
+    'assistant':['administrative assistant','executive assistant','legal assistant','hr assistant','veterinary assistant'],
+    'coordinator':['hr coordinator','logistics coordinator','project manager'],
+    'specialist':['seo specialist','digital marketer','data analyst','hr coordinator'],
+    'consultant':['consultant','management consultant','strategy consultant'],
+    'nurse':['nurse','registered nurse','nurse practitioner','nursing assistant'],
+    'doctor':['doctor','physician','surgeon'],
+    'sales':['sales representative','sales manager','account executive','retail salesperson','account manager'],
+    'marketing':['marketing manager','digital marketer','marketing analyst','social media manager','brand manager'],
+    'design':['graphic designer','ui designer','ux designer','web designer','interior designer'],
+    'write':['copywriter','content writer','technical writer','journalist','editor'],
+    'writer':['copywriter','content writer','technical writer','journalist'],
+    'legal':['lawyer','attorney','paralegal','legal assistant','legal secretary'],
+    'finance':['financial analyst','accountant','financial advisor','credit analyst','loan officer'],
+    'accounting':['accountant','auditor','bookkeeper','tax preparer','billing clerk'],
+    'tech':['software engineer','software developer','data scientist','computer programmer','qa tester'],
+    'support':['customer service representative','call center agent','administrative assistant'],
+    'healthcare':['registered nurse','doctor','therapist','pharmacist','emt'],
+    'medical':['doctor','physician','nurse','medical transcriptionist','medical coder','pharmacist'],
+    'teach':['teacher','professor','lecturer','tutor'],
+    'construction':['construction worker','construction laborer','carpenter','electrician','plumber','roofer'],
+    'trade':['electrician','plumber','carpenter','welder','hvac technician','mechanic'],
+    'executive':['executive','ceo','chief executive','operations manager'],
+    'data':['data analyst','data scientist','data entry clerk'],
+    'software':['software engineer','software developer','computer programmer'],
+    'customer':['customer service representative','call center agent','sales representative'],
+    'service':['customer service representative','waiter','bartender','barber'],
+    'research':['research analyst','data scientist','market research analyst','scientist'],
+    'operations':['operations manager','logistics coordinator','warehouse manager','supply chain analyst'],
+    'hr':['hr manager','hr coordinator','hr assistant','recruiter','talent acquisition'],
+    'human resources':['hr manager','hr coordinator','hr assistant','recruiter'],
+  };
+
+  // First try direct word matching against database
+  let best=null,bestO=0;
+  for(const[k,s]of Object.entries(jdb)){
+    const kw=k.split(/\s+/);
+    const o=words.filter(w=>kw.some(x=>x.includes(w)||w.includes(x))).length;
+    if(o>bestO){bestO=o;best=s;}
+  }
+  if(best!==null && bestO>0) return best;
+
+  // Then try keyword map
+  let mapScores=[];
+  for(const w of words){
+    for(const[keyword,jobs] of Object.entries(keywordMap)){
+      if(keyword.includes(w)||w.includes(keyword)){
+        jobs.forEach(j=>{if(jdb[j])mapScores.push(jdb[j]);});
+      }
+    }
+  }
+  if(mapScores.length>0){
+    return Math.round(mapScores.reduce((a,b)=>a+b,0)/mapScores.length);
+  }
+
+  // Final fallback: check for physical vs digital signals in the title
+  const tl=t.toLowerCase();
+  
+  // Physical/hands-on job signals → low risk
+  const physicalWords=['dig','build','drive','clean','cook','weld','fix','repair','install',
+    'lift','carry','haul','load','pour','mix','cut','saw','drill','paint','wire',
+    'grave','landscape','garden','farm','ranch','fish','hunt','mine','pave',
+    'roof','plumb','brick','tile','floor','frame','demolish',
+    'deliver','truck','bus','taxi','uber','lyft',
+    'guard','security','bouncer','patrol',
+    'warehouse','factory','plant','mill','foundry',
+    'kitchen','restaurant','cafe','bar','bakery','butcher',
+    'salon','spa','tattoo','piercing',
+    'animal','dog','cat','horse','zoo','vet',
+    'gym','coach','trainer','athletic',
+    'child','nanny','daycare','babysit',
+    'janitor','custodian','maid','housekeeper',
+    'mechanic','technician','installer','foreman','crew','laborer','worker',
+    'nurse','aide','caregiver','orderly','paramedic','emt','firefight','police','officer','patrol',
+    'physical','occupational','massage','dental','hygienist'];
+  
+  if(physicalWords.some(pw=>tl.includes(pw))) return 18;
+  
+  // Senior/executive signals → moderate
+  if(tl.includes('senior')||tl.includes('lead')||tl.includes('head')||tl.includes('chief')||tl.includes('vp')||tl.includes('president')) return 48;
+  // Entry-level/intern signals → higher (entry level jobs more exposed per research)
+  if(tl.includes('intern')||tl.includes('junior')||tl.includes('entry')) return 62;
+  // Remote/digital signals → higher
+  if(tl.includes('remote')||tl.includes('virtual')||tl.includes('digital')||tl.includes('online')) return 65;
+  
+  // True unknown — default to moderate rather than elevated
+  return 45;
+}
+
+function goWithInput(){
+  const inp=document.getElementById('job-input');
+  const v=inp.value.trim();
+  if(v.length>0){
+    const vl=v.toLowerCase();
+    pickJob(v, jdb[vl]||estScore(vl));
+  }
+}
+
+function pickCat(c){
+  selJob=c.l;baseScore=c.b;
+  document.getElementById('gauge-job').classList.add('visible');
+  updateGauge('job',c.b,'Category selected');
+  setTimeout(startQ,500);
+}
+function pickJob(name,score){
+  selJob=name;baseScore=score;
+  document.getElementById('autocomplete').style.display='none';
+  document.getElementById('gauge-job').classList.add('visible');
+  updateGauge('job',score,'Job matched');
+  setTimeout(startQ,500);
+}
+
+// QUIZ
+function startQ(){qI=0;ans=[];questions=buildQuestions(selJob);go('s-quiz');updateGauge('quiz',baseScore,'Each answer shifts the needle',true);renderQ();}
+
+function renderQ(){
+  const q=questions[qI],tot=questions.length;
+  document.getElementById('prog2').style.width=(20+((qI/tot)*80))+'%';
+  document.getElementById('q-step').textContent=`STEP ${qI+2} OF ${tot+1}`;
+  document.getElementById('q-text').textContent=q.text;
+  const el=document.getElementById('q-opts');
+  el.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('div');
+    b.className='opt fiu';b.setAttribute('tabindex','-1');
+    b.setAttribute('role','button');
+    b.style.animationDelay=(i*0.06)+'s';
+    b.style.opacity='0';
+    b.textContent=o.text;
+    b.onclick=()=>{
+      ans.push({val:o.val,cat:q.cat});
+      // Update gauge immediately
+      const live=calcLive();
+      const remaining=tot-qI-1;
+      const hint=remaining>0?`${remaining} question${remaining>1?'s':''} left`:'Finalizing...';
+      updateGauge('quiz',live,hint,true);
+      qI++;
+      if(qI<questions.length){
+        setTimeout(renderQ,400); // slight delay so they see the gauge move
+      }else{
+        setTimeout(showAna,600);
+      }
+    };
+    el.appendChild(b);
+    b.blur();
+  });
+  setTimeout(()=>{el.querySelectorAll('.opt').forEach(x=>x.blur());document.activeElement?.blur();},50);
+}
+
+// ANALYZING
+function showAna(){
+  go('s-ana');
+  const bE=document.getElementById('ana-bars'),sE=document.getElementById('ana-steps');
+  bE.innerHTML='';sE.innerHTML='';
+  const steps=[
+    `Matching "${selJob}" across 342 BLS occupations...`,
+    'Applying Karpathy AI exposure scores (March 2026)...',
+    'Cross-referencing Anthropic observed exposure data...',
+    'Evaluating AI applicability (Microsoft Research)...',
+    'Applying your personal modifiers...',
+    'Generating resilience profile...'
+  ];
+  for(let i=0;i<6;i++){
+    const b=document.createElement('div');
+    b.className='ab';b.style.animationDelay=(i*0.12)+'s';
+    b.innerHTML=`<div class="ab-in" style="animation-delay:${i*0.12}s"></div>`;
+    bE.appendChild(b);
+  }
+  steps.forEach((s,i)=>{
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.className='astep';
+      el.innerHTML=`<span class="ck">✓</span> ${s}`;
+      sE.appendChild(el);
+      if(i===steps.length-1)setTimeout(showRes,600);
+    },350+i*380);
+  });
+}
+
+// SCORING
+function calc(){
+  const perQ=0.125;
+  let mod=0;
+  ans.forEach(a=>{mod+=a.val*perQ;});
+  return Math.round(Math.min(97,Math.max(5,(baseScore*0.25)+(mod))));
+}
+
+function rlvl(s){
+  if(s<=25)return{c:'rl',l:'Highly Resilient'};
+  if(s<=50)return{c:'rm',l:'Moderate Risk'};
+  if(s<=72)return{c:'rh',l:'Elevated Risk'};
+  return{c:'rc',l:'High Risk'};
+}
+
+function getBD(){
+  const m={};ans.forEach(a=>m[a.cat]=a.val);
+  return[
+    {l:'AI Can Do Your Work',v:m.overlap||50,c:'var(--red)'},
+    {l:'Judgment & Instinct',v:100-(m.judgment||50),c:'var(--green)'},
+    {l:'Human Trust Factor',v:100-(m.trust||50),c:'var(--teal)'},
+    {l:'Physical World Shield',v:100-(m.physical||50),c:'var(--blue)'},
+    {l:'Expertise Depth',v:100-(m.expertise||50),c:'var(--green)'},
+    {l:'AI Already Arriving',v:m.adopt||50,c:'var(--orange)'}
+  ];
+}
+
+function getInsight(score){
+  if(score<=25) return `Your career has strong natural defenses against AI automation. The skills that define <strong>${selJob}</strong> — human judgment, physical presence, and interpersonal connection — are exactly what AI struggles to replicate. Anthropic's 2026 research found 30% of workers have zero AI task coverage.`;
+  if(score<=50) return `Your role as <strong>${selJob}</strong> has a mix of AI-vulnerable and AI-resistant tasks. Anthropic's latest research shows AI is still far from reaching its theoretical capability — but the gap is closing. Focus on the human-centric parts of your work where you add irreplaceable value.`;
+  if(score<=72) return `As a <strong>${selJob}</strong>, a meaningful portion of your daily tasks overlap with current AI capabilities. Anthropic's 2026 research found that hiring of younger workers has already begun slowing in roles like yours. The role won't disappear overnight, but it's transforming now.`;
+  return `Anthropic's 2026 research places roles like <strong>${selJob}</strong> among the most AI-exposed occupations, with high task coverage already observed in real-world AI usage. The good news: awareness is the first step, and workers who adapt now have a significant advantage.`;
+}
+
+function getTips(score){
+  const t=[];
+  if(score>65) t.push({i:'⚡',t:'Start using AI tools in your role today',d:`The workers replacing ${selJob} roles aren't robots — they're people in similar roles who use AI to work 5-10x faster. Becoming that person is your biggest career move right now.`,bg:'rgba(255,119,51,0.08)'});
+  if(score>40) t.push({i:'🔄',t:'Shift toward judgment-heavy work',d:'Actively seek projects requiring complex decision-making, relationship building, or creative strategy. These tasks have near-zero AI automation overlap in every 2025 study.',bg:'rgba(255,170,34,0.08)'});
+  t.push({i:'🛡️',t:'Double down on your human advantage',d:'Trust, empathy, physical presence, and real-time adaptability are your career moat. The 2025 research consistently shows these skills have the lowest AI displacement risk.',bg:'rgba(51,136,255,0.08)'});
+  t.push({i:'📈',t:'Build AI literacy as a career accelerator',d:'Understanding what AI can and can\'t do is becoming the most valuable meta-skill across every industry. You don\'t need to code — you need to know how to leverage AI tools effectively.',bg:'rgba(34,204,170,0.08)'});
+  if(score<=25) t.push({i:'💪',t:'Your position is strong — maintain it',d:'Your role has characteristics that make it naturally resistant to AI automation. Stay informed on AI developments in your field to keep this advantage as the technology evolves.',bg:'rgba(34,221,119,0.08)'});
+  return t.slice(0,4);
+}
+
+// RESULTS
+function showRes(){
+  const score=calc(),r=rlvl(score),bd=getBD(),tips=getTips(score).slice(0,2);
+  const pct=Math.max(8,Math.min(92,Math.round(100-score+(Math.random()*8-4))));
+  lastScore=score; lastRisk=r.l;
+
+  // Split bars: first 2 visible (risk indicators), then 1 strength visible, then 3 locked
+  const visibleBars = [bd[0], bd[5]]; // AI overlap + AI adoption (the scary ones)
+  const strengthBar = bd[1]; // Judgment (a positive one to balance)
+  const lockedBars = [
+    {l:'Your Hidden Strength',fakeV:Math.round(40+Math.random()*30)},
+    {l:'Your Biggest Vulnerability',fakeV:Math.round(50+Math.random()*30)},
+    {l:'Your Career Moat Score',fakeV:Math.round(30+Math.random()*40)}
+  ];
+
+  document.getElementById('s-res').innerHTML=`
+    <div class="card ${r.c} fiu" id="score-card">
+      <div class="ctop">
+        <div class="cbrand">AI Career Resilience Score</div>
+        <div class="curl">willaireplaceme.online</div>
+      </div>
+      <div class="sc">
+        <div class="sc-n">${score}</div>
+        <div class="sc-of">/ 100 risk score</div>
+        <div class="sc-lbl">${r.l}</div>
+        <div class="sc-job">${selJob}</div>
+      </div>
+      <div class="bdg">
+        ${visibleBars.map(b=>`
+          <div class="bdi">
+            <div class="bdi-l">${b.l}</div>
+            <div class="bdi-bar"><div class="bdi-f" style="width:${b.v}%;background:${b.c}"></div></div>
+            <div class="bdi-v" style="color:${b.c}">${b.v}%</div>
+          </div>
+        `).join('')}
+        <div class="bdi">
+          <div class="bdi-l">${strengthBar.l}</div>
+          <div class="bdi-bar"><div class="bdi-f" style="width:${strengthBar.v}%;background:${strengthBar.c}"></div></div>
+          <div class="bdi-v" style="color:${strengthBar.c}">${strengthBar.v}%</div>
+        </div>
+        ${lockedBars.map(b=>`
+          <div class="bdi-locked" onclick="document.getElementById('upsell-section').scrollIntoView({behavior:'smooth'})">
+            <div class="bdi-l">${b.l}</div>
+            <div class="bdi-bar"><div class="bdi-f" style="width:${b.fakeV}%;background:var(--text-dim)"></div></div>
+            <div class="bdi-v">${b.fakeV}%</div>
+            <div class="bdi-lock-icon">🔒</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="cmp">More resilient than <strong>${pct}%</strong> of people in similar roles</div>
+      <div class="dsrc">Data: Karpathy/BLS 2026 · Anthropic Economic Index · Goldman Sachs · Microsoft Research · Wharton</div>
+    </div>
+
+    <div class="upsell fiu d1" id="upsell-section" style="margin-top:-12px;">
+      <div class="upsell-badge">Unlock Full Results</div>
+      <div class="upsell-h">See what's behind the 🔒</div>
+      <div class="upsell-p">Your score is <strong>${score}/100</strong> — but the <strong>why</strong> matters more than the number. Unlock your full ${selJob} career resilience profile.</div>
+      <div class="upsell-feats">
+        <div class="upsell-f"><span class="ck">🔓</span> Your Hidden Strength, Biggest Vulnerability & Career Moat</div>
+        <div class="upsell-f"><span class="ck">✓</span> Which specific tasks in your role AI can handle today</div>
+        <div class="upsell-f"><span class="ck">✓</span> Personalized upskilling roadmap with courses & certs</div>
+        <div class="upsell-f"><span class="ck">✓</span> 12-month career resilience action plan</div>
+        <div class="upsell-f"><span class="ck">✓</span> Timeline: when AI will significantly impact your role</div>
+      </div>
+      <div class="upsell-btn" tabindex="-1" onclick="startCheckout()">Unlock My Full Analysis — $9.99</div>
+      <div class="upsell-note">One-time payment · AI-generated · Delivered instantly to your email</div>
+    </div>
+
+    <div class="share-sec fiu d2" style="margin-bottom:16px">
+      <div class="share-h">Share your score</div>
+      <div class="share-row">
+        <button class="share-b" tabindex="-1" onclick="shIG(${score},'${r.l}')">📸 Instagram</button>
+        <button class="share-b" tabindex="-1" onclick="shTw(${score},'${r.l}')">𝕏 Twitter</button>
+        <button class="share-b" tabindex="-1" onclick="shLi(${score},'${r.l}')">in LinkedIn</button>
+        <button class="share-b" tabindex="-1" onclick="shFb(${score},'${r.l}')">f Facebook</button>
+      </div>
+      <div style="margin-top:8px;width:100%">
+        <button class="share-b" tabindex="-1" style="width:100%;border-radius:12px;" onclick="shCp(${score},'${r.l}')">📋 Copy Link</button>
+      </div>
+    </div>
+
+    <div class="insight fiu d3">
+      <div class="insight-txt">${getInsight(score)}</div>
+    </div>
+
+    <div class="tips fiu d3">
+      <div class="tips-h">What You Can Do Now</div>
+      ${tips.map(t=>`
+        <div class="tip">
+          <div class="tip-top">
+            <div class="tip-i" style="background:${t.bg}">${t.i}</div>
+            <div class="tip-t">${t.t}</div>
+          </div>
+          <div class="tip-d">${t.d}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="email-sec fiu d4">
+      <div class="email-h">Track how your score changes over time</div>
+      <div class="email-p">AI capabilities evolve fast. Get a monthly update on how new developments affect your specific career risk.</div>
+      <div class="email-row" id="em-r">
+        <input type="email" class="email-in" id="em-i" placeholder="your@email.com">
+        <button class="email-btn" onclick="subE()">Get Updates</button>
+      </div>
+      <div class="email-ok" id="em-ok">✓ You're in — we'll keep you posted.</div>
+    </div>
+
+    <button class="retake" onclick="restart()">↻ Take It Again</button>
+  `;
+  go('s-res');
+  setTimeout(()=>generateShareImage(score,r.l),500);
+}
+
+function subE(){
+  const v=document.getElementById('em-i').value;
+  if(v&&v.includes('@')){
+    // Submit to Netlify Forms
+    const formData=new URLSearchParams();
+    formData.append('form-name','email-signups');
+    formData.append('email',v);
+    formData.append('job-title',selJob||'');
+    formData.append('risk-score',lastScore||'');
+    formData.append('risk-level',lastRisk||'');
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:formData.toString()})
+      .then(()=>{
+        document.getElementById('em-r').style.display='none';
+        document.getElementById('em-ok').style.display='block';
+      })
+      .catch(()=>{
+        document.getElementById('em-r').style.display='none';
+        document.getElementById('em-ok').style.display='block';
+      });
+  }
+}
+
+function generateShareImage(score,riskLabel){
+  const c=document.createElement('canvas');
+  c.width=1080; c.height=1920;
+  const ctx=c.getContext('2d');
+  ctx.fillStyle='#07070d';
+  ctx.fillRect(0,0,1080,1920);
+  const grd=ctx.createRadialGradient(540,600,100,540,600,800);
+  grd.addColorStop(0,'rgba(51,136,255,0.06)');
+  grd.addColorStop(1,'rgba(7,7,13,0)');
+  ctx.fillStyle=grd;
+  ctx.fillRect(0,0,1080,1920);
+  const col=score<=25?'#22dd77':score<=50?'#ffcc00':score<=72?'#ff7733':'#ff3344';
+  ctx.fillStyle='#9999b2';
+  ctx.font='500 28px sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText('AI CAREER RESILIENCE SCORE',540,280);
+  ctx.beginPath();
+  ctx.arc(540,750,220,Math.PI,2*Math.PI);
+  ctx.strokeStyle='#1c1c2c';
+  ctx.lineWidth=44;
+  ctx.lineCap='round';
+  ctx.stroke();
+  const fillAngle=Math.PI+(score/100)*Math.PI;
+  ctx.beginPath();
+  ctx.arc(540,750,220,Math.PI,fillAngle);
+  ctx.strokeStyle=col;
+  ctx.lineWidth=44;
+  ctx.lineCap='round';
+  ctx.stroke();
+  const nx=540+Math.cos(fillAngle)*180;
+  const ny=750+Math.sin(fillAngle)*180;
+  ctx.beginPath();
+  ctx.moveTo(540,750);
+  ctx.lineTo(nx,ny);
+  ctx.strokeStyle='#eeeef3';
+  ctx.lineWidth=6;
+  ctx.lineCap='round';
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(540,750,14,0,2*Math.PI);
+  ctx.fillStyle='#eeeef3';
+  ctx.fill();
+  ctx.fillStyle=col;
+  ctx.font='800 160px sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText(score,540,950);
+  ctx.fillStyle='#55556d';
+  ctx.font='400 32px monospace';
+  ctx.fillText('/ 100 risk score',540,1000);
+  ctx.fillStyle=col;
+  ctx.font='700 42px sans-serif';
+  ctx.fillText(riskLabel.toUpperCase(),540,1070);
+  ctx.fillStyle='#9999b2';
+  ctx.font='400 36px sans-serif';
+  ctx.fillText(selJob,540,1130);
+  ctx.beginPath();
+  ctx.moveTo(340,1200);
+  ctx.lineTo(740,1200);
+  ctx.strokeStyle='#1c1c2c';
+  ctx.lineWidth=2;
+  ctx.stroke();
+  ctx.fillStyle='#9999b2';
+  ctx.font='500 34px sans-serif';
+  ctx.fillText('How AI-resilient is YOUR career?',540,1280);
+  ctx.fillStyle=col;
+  ctx.font='700 38px sans-serif';
+  ctx.fillText('willaireplaceme.online',540,1340);
+  ctx.fillStyle='#55556d';
+  ctx.font='400 28px sans-serif';
+  ctx.fillText('Take the free 60-second quiz',540,1400);
+  ctx.fillStyle='#333348';
+  ctx.font='400 22px monospace';
+  ctx.fillText('Data: Karpathy/BLS · Anthropic · Goldman Sachs',540,1800);
+  c.toBlob(function(blob){ shareImageBlob=blob; },'image/png');
+}
+
+function shIG(s,l){
+  const btn=event.target;
+  if(shareImageBlob && navigator.canShare){
+    const file=new File([shareImageBlob],`ai-score-${s}.png`,{type:'image/png'});
+    if(navigator.canShare({files:[file]})){
+      navigator.share({
+        files:[file],
+        title:'My AI Career Resilience Score',
+        text:`I scored ${s}/100 (${l}). willaireplaceme.online`
+      }).catch(()=>{});
+      return;
+    }
+  }
+  // Fallback — download the image
+  if(shareImageBlob){
+    const url=URL.createObjectURL(shareImageBlob);
+    const link=document.createElement('a');
+    link.download=`ai-score-${s}.png`;
+    link.href=url;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+}
+function shTw(s,l){
+  const t=encodeURIComponent(`Just checked how AI-resilient my career is: ${s}/100 (${l})\n\nCurious where you stand? → https://willaireplaceme.online`);
+  window.open(`https://twitter.com/intent/tweet?text=${t}`,'_blank');
+}
+function shLi(s,l){
+  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://willaireplaceme.online')}`,'_blank');
+}
+function shFb(s,l){
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://willaireplaceme.online')}&quote=${encodeURIComponent(`My AI Career Resilience Score: ${s}/100 (${l}). How resilient is YOUR career?`)}`,'_blank');
+}
+function shCp(s,l){
+  const t=`I scored ${s}/100 on the AI Career Resilience Score (${l}). See where you stand: willaireplaceme.online`;
+  navigator.clipboard.writeText(t).then(()=>{
+    const b=event.target;const o=b.textContent;
+    b.textContent='✓ Copied!';setTimeout(()=>b.textContent=o,2000);
+  });
+}
+
+function dlCard(){
+  const card=document.getElementById('score-card');
+  const btn=event.target;
+  btn.textContent='Generating...';
+  html2canvas(card,{
+    backgroundColor:'#0e0e18',
+    scale:2,
+    useCORS:true,
+    logging:false
+  }).then(canvas=>{
+    const link=document.createElement('a');
+    link.download=`ai-risk-score-${lastScore}.png`;
+    link.href=canvas.toDataURL('image/png');
+    link.click();
+    btn.textContent='📸 Save Score Card';
+  }).catch(()=>{
+    btn.textContent='📸 Save Score Card';
+  });
+}
+
+function dlStory(score,riskLabel){
+  const btn=event.target;
+  btn.textContent='Creating image...';
+  
+  // Create Stories-sized canvas (1080x1920)
+  const c=document.createElement('canvas');
+  c.width=1080; c.height=1920;
+  const ctx=c.getContext('2d');
+  
+  // Background
+  ctx.fillStyle='#07070d';
+  ctx.fillRect(0,0,1080,1920);
+  
+  // Subtle gradient overlay
+  const grd=ctx.createRadialGradient(540,600,100,540,600,800);
+  grd.addColorStop(0,'rgba(51,136,255,0.06)');
+  grd.addColorStop(1,'rgba(7,7,13,0)');
+  ctx.fillStyle=grd;
+  ctx.fillRect(0,0,1080,1920);
+  
+  // Score color
+  const col = score<=25?'#22dd77':score<=50?'#ffcc00':score<=72?'#ff7733':'#ff3344';
+  
+  // Top badge
+  ctx.fillStyle='#9999b2';
+  ctx.font='500 28px Sora, sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText('AI CAREER RESILIENCE SCORE',540,280);
+  
+  // Gauge arc background
+  ctx.beginPath();
+  ctx.arc(540,750,220,Math.PI,2*Math.PI);
+  ctx.strokeStyle='#1c1c2c';
+  ctx.lineWidth=44;
+  ctx.lineCap='round';
+  ctx.stroke();
+  
+  // Gauge arc fill
+  const fillAngle = Math.PI + (score/100)*Math.PI;
+  ctx.beginPath();
+  ctx.arc(540,750,220,Math.PI,fillAngle);
+  ctx.strokeStyle=col;
+  ctx.lineWidth=44;
+  ctx.lineCap='round';
+  ctx.stroke();
+  
+  // Needle
+  const needleAngle = Math.PI + (score/100)*Math.PI;
+  const nx = 540 + Math.cos(needleAngle)*180;
+  const ny = 750 + Math.sin(needleAngle)*180;
+  ctx.beginPath();
+  ctx.moveTo(540,750);
+  ctx.lineTo(nx,ny);
+  ctx.strokeStyle='#eeeef3';
+  ctx.lineWidth=6;
+  ctx.lineCap='round';
+  ctx.stroke();
+  
+  // Center dot
+  ctx.beginPath();
+  ctx.arc(540,750,14,0,2*Math.PI);
+  ctx.fillStyle='#eeeef3';
+  ctx.fill();
+  
+  // Score number
+  ctx.fillStyle=col;
+  ctx.font='800 160px Sora, sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText(score,540,950);
+  
+  // /100 risk score
+  ctx.fillStyle='#55556d';
+  ctx.font='400 32px "JetBrains Mono", monospace';
+  ctx.fillText('/ 100 risk score',540,1000);
+  
+  // Risk label
+  ctx.fillStyle=col;
+  ctx.font='700 42px Sora, sans-serif';
+  ctx.fillText(riskLabel.toUpperCase(),540,1070);
+  
+  // Job title
+  ctx.fillStyle='#9999b2';
+  ctx.font='400 36px Sora, sans-serif';
+  ctx.fillText(selJob,540,1130);
+  
+  // Divider
+  ctx.beginPath();
+  ctx.moveTo(340,1200);
+  ctx.lineTo(740,1200);
+  ctx.strokeStyle='#1c1c2c';
+  ctx.lineWidth=2;
+  ctx.stroke();
+  
+  // CTA text
+  ctx.fillStyle='#9999b2';
+  ctx.font='500 34px Sora, sans-serif';
+  ctx.fillText('How AI-resilient is YOUR career?',540,1280);
+  
+  // URL
+  ctx.fillStyle=col;
+  ctx.font='700 38px Sora, sans-serif';
+  ctx.fillText('willaireplaceme.online',540,1340);
+  
+  // "Take the free quiz" CTA
+  ctx.fillStyle='#55556d';
+  ctx.font='400 28px Sora, sans-serif';
+  ctx.fillText('Take the free 60-second quiz',540,1400);
+  
+  // Source note at bottom
+  ctx.fillStyle='#333348';
+  ctx.font='400 22px "JetBrains Mono", monospace';
+  ctx.fillText('Data: Karpathy/BLS · Anthropic · Goldman Sachs',540,1800);
+  
+  // Try Web Share API first (opens native share sheet — Instagram, Facebook, WhatsApp, etc.)
+  c.toBlob(async function(blob){
+    const file = new File([blob], `ai-score-${score}.png`, {type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      try {
+        await navigator.share({
+          title:'My AI Career Resilience Score',
+          text:`I scored ${score}/100 (${riskLabel}). How AI-resilient is YOUR career? willaireplaceme.online`,
+          files:[file]
+        });
+        btn.textContent='📸 Instagram';
+        return;
+      } catch(e){
+        // User cancelled or share failed — fall through to download
+      }
+    }
+    // Fallback: download the image
+    const link=document.createElement('a');
+    link.download=`ai-score-${score}-${selJob.replace(/\s+/g,'-').toLowerCase()}.png`;
+    link.href=c.toDataURL('image/png');
+    link.click();
+    btn.textContent='📸 Instagram';
+  },'image/png');
+}
+
+async function startCheckout(){
+  const btn=event.target;
+  const origText=btn.textContent;
+  btn.textContent='Connecting to checkout...';
+  btn.style.opacity='0.7';
+  try {
+    const res=await fetch('/api/create-checkout',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({jobTitle:selJob,score:lastScore,riskLevel:lastRisk})
+    });
+    const data=await res.json();
+    if(data.url){
+      window.location.href=data.url;
+    } else {
+      throw new Error('No checkout URL returned');
+    }
+  } catch(e){
+    console.error('Checkout error:',e);
+    btn.textContent='Error — please try again';
+    btn.style.opacity='1';
+    setTimeout(()=>btn.textContent=origText,3000);
+  }
+}
+
+function restart(){
+  selJob=null;baseScore=50;ans=[];qI=0;
+  document.getElementById('job-input').value='';
+  go('s-job');
+}
+
+initJob();
+// iOS Safari focus fix — physically reset border colors every 100ms
+setInterval(()=>{
+  document.querySelectorAll('.opt,.jtile,.share-b,.dl-btn,.upsell-btn').forEach(el=>{
+    if(document.activeElement===el){
+      el.blur();
+      el.style.borderColor='#1c1c2c';
+      el.style.outline='none';
+      el.style.boxShadow='none';
+    }
+  });
+  // Also catch any focused element and force blur
+  if(document.activeElement && document.activeElement.tagName==='BUTTON'){
+    document.activeElement.style.borderColor='#1c1c2c';
+    document.activeElement.style.outline='none';
+    document.activeElement.blur();
+  }
+  if(document.activeElement && document.activeElement.tagName==='DIV' && document.activeElement.classList.contains('opt')){
+    document.activeElement.style.borderColor='#1c1c2c';
+    document.activeElement.blur();
+  }
+},100);
+</script>
+</body>
+</html>
