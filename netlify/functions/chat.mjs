@@ -89,22 +89,6 @@ RULES:
 - Name real tools, courses, certifications.
 - Use their exact job title throughout.`;
 
-const REPORT_PROMPT = `Generate a detailed AI Career Resilience Deep Analysis report based on the interview transcript provided. Use markdown formatting. Be specific, reference their actual words, and be honest. Use this structure:
-
-# Your AI Career Resilience Deep Analysis
-## [Job Title] · Overall Risk Score: [X]/100
-### Executive Summary (4-5 sentences)
-### Your 6 Resilience Dimensions (AI Output Overlap, Judgment Complexity, Human Trust Factor, Physical World Dependency, Expertise Depth, AI Adoption Velocity — each with percentage and 3-4 sentences)
-### Task-by-Task Vulnerability Map (6-8 tasks rated Safe/Evolving/At Risk)
-### Your Career Moat (4-5 sentences)
-### Your Biggest Vulnerability (4-5 sentences, honest)
-### Your Hidden Strength (3-4 sentences)
-### Upskilling Roadmap (This Week / 30 Days / 90 Days / 12 Months — specific courses and tools)
-### Timeline (Now-12mo / 1-2yr / 3-5yr)
-### Final Word (3-4 sentences)
-
-Name real courses, tools, and certifications. Quote their words. Be direct and constructive.`;
-
 export default async (request, context) => {
   if (request.method !== 'POST') {
     return new Response('Method Not Allowed', { status: 405 });
@@ -112,7 +96,7 @@ export default async (request, context) => {
 
   try {
     const body = await request.json();
-    const { messages, mode } = body;
+    const { messages } = body;
 
     if (!messages || !Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: 'Messages array required' }), {
@@ -121,8 +105,6 @@ export default async (request, context) => {
       });
     }
 
-    const systemPrompt = mode === 'report' ? REPORT_PROMPT : SYSTEM_PROMPT;
-
     const stream = new ReadableStream({
       async start(controller) {
         try {
@@ -130,7 +112,7 @@ export default async (request, context) => {
           const response = await client.messages.stream({
             model: 'claude-sonnet-4-20250514',
             max_tokens: 8192,
-            system: systemPrompt,
+            system: SYSTEM_PROMPT,
             messages: messages,
           });
 

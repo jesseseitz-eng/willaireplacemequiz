@@ -1,7 +1,6 @@
 {
-  "name": "willaireplace-me",
+  "name": "willaireplaceme",
   "version": "1.0.0",
-  "description": "AI Career Resilience Score - paid analysis backend",
   "dependencies": {
     "stripe": "^14.0.0",
     "@anthropic-ai/sdk": "^0.30.0"
