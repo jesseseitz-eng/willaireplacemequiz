@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Your Deep Analysis — Will AI Replace Me?</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+  :root {
+    --bg:#07070d; --bg-card:rgba(14,14,22,0.95);
+    --border:rgba(255,255,255,0.06);
+    --text:#eeeef3; --text-mid:#9999b2; --text-dim:#55556d;
+    --blue:#3388ff; --green:#22dd77; --red:#ff3344;
+    --orange:#ff7733; --amber:#ffaa22; --teal:#22ccaa;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Sora',sans-serif; background:var(--bg); color:var(--text);
+    min-height:100vh; display:flex; flex-direction:column; align-items:center;
+  }
+  .container { width:100%; max-width:640px; padding:20px 16px; flex:1; display:flex; flex-direction:column; }
+  .header { text-align:center; padding:16px 0 20px; border-bottom:1px solid var(--border); margin-bottom:16px; }
+  .header h1 { font-size:18px; font-weight:700; margin-bottom:4px; }
+  .header p { font-size:12px; color:var(--text-dim); font-family:'JetBrains Mono',monospace; }
+  .progress-bar { width:100%; height:4px; background:var(--border); border-radius:2px; margin-bottom:20px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--blue),var(--teal)); border-radius:2px; transition:width 0.5s ease; }
+  .step-label { font-size:11px; color:var(--text-dim); text-align:center; font-family:'JetBrains Mono',monospace; margin-bottom:16px; letter-spacing:1px; }
+  .chat { flex:1; overflow-y:auto; padding-bottom:120px; }
+  .msg { margin-bottom:16px; animation:fadeIn 0.3s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  .msg-ai { background:var(--bg-card); border:1px solid var(--border); border-radius:16px 16px 16px 4px; padding:16px 18px; font-size:15px; line-height:1.6; }
+  .msg-user { background:rgba(51,136,255,0.1); border:1px solid rgba(51,136,255,0.2); border-radius:16px 16px 4px 16px; padding:16px 18px; font-size:15px; line-height:1.6; margin-left:24px; }
+  .msg-label { font-size:10px; font-family:'JetBrains Mono',monospace; color:var(--text-dim); margin-bottom:4px; letter-spacing:1px; text-transform:uppercase; }
+  .typing { display:flex; gap:4px; padding:8px 0; }
+  .typing span { width:8px; height:8px; background:var(--text-dim); border-radius:50%; animation:bounce 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay:0.2s; }
+  .typing span:nth-child(3) { animation-delay:0.4s; }
+  @keyframes bounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-8px)} }
+  .input-area { position:fixed; bottom:0; left:0; right:0; background:linear-gradient(transparent,var(--bg) 20%); padding:16px; display:flex; flex-direction:column; align-items:center; }
+  .input-wrap { width:100%; max-width:640px; display:flex; gap:8px; }
+  .input-field { flex:1; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; font-size:15px; font-family:'Sora',sans-serif; color:var(--text); resize:none; outline:none; min-height:48px; max-height:120px; line-height:1.5; }
+  .input-field:focus { border-color:var(--blue); }
+  .input-field::placeholder { color:var(--text-dim); }
+  .send-btn { background:var(--blue); border:none; border-radius:12px; width:48px; height:48px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s; align-self:flex-end; }
+  .send-btn:hover { background:#4499ff; }
+  .send-btn:disabled { opacity:0.3; cursor:not-allowed; }
+  .send-btn svg { width:20px; height:20px; fill:white; }
+  .report { background:var(--bg-card); border:1px solid var(--border); border-radius:20px; padding:28px 24px; margin:16px 0; font-size:15px; line-height:1.7; }
+  .report h1 { font-size:22px; margin-bottom:8px; }
+  .report h2 { font-size:16px; color:var(--blue); margin:24px 0 8px; border-bottom:1px solid var(--border); padding-bottom:6px; }
+  .report h3 { font-size:14px; color:var(--teal); margin:18px 0 6px; }
+  .report p { margin-bottom:10px; color:var(--text-mid); }
+  .report strong { color:var(--text); }
+  .report ul, .report ol { margin:8px 0 8px 20px; color:var(--text-mid); }
+  .report li { margin-bottom:6px; }
+  .save-btns { display:flex; gap:8px; justify-content:center; margin:20px 0; flex-wrap:wrap; }
+  .save-btn { background:var(--bg-card); border:1px solid var(--border); color:var(--text); padding:12px 24px; font-size:14px; font-family:'Sora',sans-serif; font-weight:500; border-radius:12px; cursor:pointer; }
+  .save-btn:hover { border-color:var(--blue); }
+  .save-btn.primary { background:var(--blue); border-color:var(--blue); color:white; }
+  .loading-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:60vh; text-align:center; }
+  .loading-screen h2 { font-size:20px; margin-bottom:8px; }
+  .loading-screen p { font-size:14px; color:var(--text-mid); }
+  .spinner { width:40px; height:40px; border:3px solid var(--border); border-top-color:var(--blue); border-radius:50%; animation:spin 1s linear infinite; margin-bottom:16px; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+  .error-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:60vh; text-align:center; }
+  .error-screen h2 { color:var(--red); margin-bottom:8px; }
+  .error-screen p { color:var(--text-mid); margin-bottom:16px; }
+  .error-screen a { color:var(--blue); }
+  @media(max-width:600px) { .report { padding:20px 16px; } .msg-user { margin-left:12px; } }
+</style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="loading-screen"><div class="spinner"></div><h2>Verifying your payment...</h2><p>Setting up your personalized analysis</p></div>
+</div>
+<script>
+// ===== STATE =====
+const S = {
+  phase: 'verifying', // verifying | interview | generating | complete | error
+  messages: [],
+  answersGiven: 0,
+  totalQuestions: 7,
+  jobTitle: '',
+  score: 0,
+  riskLevel: '',
+  reportMarkdown: '',
+};
+
+const params = new URLSearchParams(window.location.search);
+const sessionId = params.get('session_id');
+S.jobTitle = decodeURIComponent(params.get('job') || 'your role');
+S.score = parseInt(params.get('score') || '50');
+S.riskLevel = decodeURIComponent(params.get('risk') || 'Moderate Risk');
+
+// ===== BOOT =====
+async function init() {
+  if (!sessionId) return showError('No payment session found.');
+  try {
+    const res = await fetch('/api/verify-payment', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({sessionId}) });
+    const data = await res.json();
+    if (!data.paid) return showError('Payment not completed. Please try again.');
+    if (data.jobTitle) S.jobTitle = data.jobTitle;
+    if (data.score) S.score = parseInt(data.score);
+    if (data.riskLevel) S.riskLevel = data.riskLevel;
+    startInterview();
+  } catch(e) { showError('Could not verify payment.'); }
+}
+
+function showError(msg) {
+  S.phase = 'error';
+  document.getElementById('app').innerHTML = `<div class="error-screen"><h2>Something went wrong</h2><p>${msg}</p><a href="/">Back to quiz</a></div>`;
+}
+
+// ===== INTERVIEW =====
+function startInterview() {
+  S.phase = 'interview';
+  document.getElementById('app').innerHTML = `
+    <div class="header"><h1>Your Deep Analysis</h1><p>${S.jobTitle} · Score: ${S.score}/100</p></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+    <div class="step-label" id="step-label">Question 1 of ${S.totalQuestions}</div>
+    <div class="chat" id="chat"></div>
+    <div class="input-area" id="input-area">
+      <div class="input-wrap">
+        <textarea class="input-field" id="user-input" placeholder="Type your answer..." rows="1"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAnswer()}"></textarea>
+        <button class="send-btn" id="send-btn" onclick="sendAnswer()">
+          <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+    </div>`;
+  document.getElementById('user-input').addEventListener('input', function(){ this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,120)+'px'; });
+  S.messages.push({ role:'user', content:`I'm a ${S.jobTitle}. My free quiz score was ${S.score}/100 (${S.riskLevel}). Please start by asking me your first question.` });
+  showTyping();
+  askNextQuestion();
+}
+
+// ===== CORE: STREAM FROM CLAUDE =====
+async function streamFromClaude(msgs, onChunk, mode) {
+  const res = await fetch('/api/chat', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({ messages: msgs, mode: mode || 'chat' }),
+  });
+  if (!res.ok) throw new Error('Server ' + res.status);
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let full = '';
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const chunk = decoder.decode(value, { stream:true });
+    if (chunk.startsWith('[ERROR]')) throw new Error(chunk);
+    full += chunk;
+    onChunk(full);
+  }
+  return full;
+}
+
+// ===== ASK QUESTION (streamed) =====
+async function askNextQuestion() {
+  removeTyping();
+  const chat = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'msg';
+  const liveId = 'ai-' + Date.now();
+  div.innerHTML = `<div class="msg-label">AI Analyst</div><div class="msg-ai" id="${liveId}"></div>`;
+  chat.appendChild(div);
+  try {
+    const text = await streamFromClaude(S.messages, (partial) => {
+      document.getElementById(liveId).textContent = partial;
+      chat.scrollTop = chat.scrollHeight;
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+    S.messages.push({ role:'assistant', content: text });
+    setInput(true);
+  } catch(e) {
+    console.error(e);
+    document.getElementById(liveId).textContent = 'Connection issue — please type your answer and send, I\'ll try again.';
+    setInput(true);
+  }
+}
+
+// ===== SEND ANSWER =====
+function sendAnswer() {
+  if (S.phase !== 'interview') return;
+  const input = document.getElementById('user-input');
+  const text = input.value.trim();
+  if (!text) return;
+  setInput(false);
+  addMsg('user', text);
+  input.value = ''; input.style.height = 'auto';
+  S.messages.push({ role:'user', content: text });
+  S.answersGiven++;
+  updateProgress();
+  if (S.answersGiven >= S.totalQuestions) {
+    generateReport();
+  } else {
+    showTyping();
+    askNextQuestion();
+  }
+}
+
+// ===== GENERATE REPORT (split into 2 fast calls) =====
+async function generateReport() {
+  S.phase = 'generating';
+  document.getElementById('step-label').textContent = 'Generating your report...';
+  document.getElementById('prog').style.width = '85%';
+  document.getElementById('input-area').style.display = 'none';
+
+  let transcript = `JOB: ${S.jobTitle} | SCORE: ${S.score}/100 (${S.riskLevel})\n\n`;
+  for (let i = 1; i < S.messages.length; i++) {
+    const m = S.messages[i];
+    transcript += (m.role === 'assistant' ? 'Q: ' : 'A: ') + m.content + '\n\n';
+  }
+
+  const chat = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'msg';
+  div.innerHTML = '<div class="report" id="report-live"><p style="color:var(--text-dim)">Building your personalized report...</p></div>';
+  chat.appendChild(div);
+
+  try {
+    const p1Prompt = transcript + `\nGenerate PART 1 of my career report. Include ONLY:
+
+# Your AI Career Resilience Deep Analysis
+## ${S.jobTitle} · Risk Score: [X]/100
+
+### Executive Summary
+[4-5 direct sentences referencing my answers.]
+
+### Your 6 Resilience Dimensions
+**AI Output Overlap: [X]% risk** [3 sentences]
+**Judgment Complexity: [X]% protected** [3 sentences]
+**Human Trust Factor: [X]% protected** [3 sentences]
+**Physical World Dependency: [X]%** [2 sentences]
+**Expertise Depth: [X]% protected** [3 sentences]
+**AI Adoption Velocity: [X]% urgency** [3 sentences]
+
+### Task-by-Task Vulnerability Map
+[List 6-8 of my actual tasks, rate each Safe/Evolving/At Risk, 1-2 sentences each.]
+
+Quote my words. Be honest. STOP after the task map.`;
+
+    const part1 = await streamFromClaude([{ role:'user', content: p1Prompt }], (partial) => {
+      document.getElementById('report-live').innerHTML = marked.parse(partial);
+      chat.scrollTop = chat.scrollHeight;
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    document.getElementById('prog').style.width = '95%';
+    document.getElementById('step-label').textContent = 'Finalizing recommendations...';
+
+    const p2Prompt = transcript + `\nI already generated Part 1:\n\n${part1}\n\nNow generate PART 2 continuing directly. Include ONLY:
+
+### Your Career Moat
+[4-5 sentences referencing my words.]
+
+### Your Biggest Vulnerability
+[4-5 sentences. Honest but constructive.]
+
+### Your Hidden Strength
+[3-4 sentences.]
+
+### Upskilling Roadmap
+**This Week:** [2-3 actions with real course names]
+**Next 30 Days:** [2-3 actions]
+**Next 90 Days:** [2-3 moves]
+**Next 12 Months:** [3-4 sentences]
+
+### Timeline
+**Now to 12 months:** [What's happening]
+**1-2 years:** [What's coming]
+**3-5 years:** [Projection]
+
+### Final Word
+[3-4 sentences. Encouraging and specific.]
+
+Quote my words. Do NOT repeat Part 1 content.`;
+
+    const part2 = await streamFromClaude([{ role:'user', content: p2Prompt }], (partial) => {
+      document.getElementById('report-live').innerHTML = marked.parse(part1 + '\n\n' + partial);
+      chat.scrollTop = chat.scrollHeight;
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    S.phase = 'complete';
+    S.reportMarkdown = part1 + '\n\n' + part2;
+    document.getElementById('step-label').textContent = 'Analysis complete ✓';
+    document.getElementById('prog').style.width = '100%';
+    const btns = document.createElement('div');
+    btns.innerHTML = `<div class="save-btns">
+      <button class="save-btn" onclick="copyReport()">📋 Copy</button>
+      <button class="save-btn" onclick="printReport()">🖨️ Print / PDF</button>
+      <button class="save-btn primary" onclick="window.location.href='/'">Retake Quiz</button>
+    </div>`;
+    chat.appendChild(btns);
+  } catch(e) {
+    console.error(e);
+    document.getElementById('report-live').innerHTML = '<p style="color:var(--red)">Report generation hit an error. Please refresh — your payment is saved.</p>';
+  }
+}
+
+// ===== HELPERS =====
+function addMsg(role, text) {
+  const chat = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'msg';
+  div.innerHTML = role === 'user'
+    ? `<div class="msg-label" style="text-align:right">You</div><div class="msg-user">${text}</div>`
+    : `<div class="msg-label">AI Analyst</div><div class="msg-ai">${text}</div>`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  window.scrollTo(0, document.body.scrollHeight);
+}
+function showTyping() {
+  removeTyping();
+  const chat = document.getElementById('chat');
+  const d = document.createElement('div'); d.id='typing-indicator'; d.className='msg';
+  d.innerHTML = '<div class="msg-label">AI Analyst</div><div class="msg-ai"><div class="typing"><span></span><span></span><span></span></div></div>';
+  chat.appendChild(d); chat.scrollTop = chat.scrollHeight;
+}
+function removeTyping() { const el = document.getElementById('typing-indicator'); if(el) el.remove(); }
+function setInput(on) {
+  const b = document.getElementById('send-btn'), i = document.getElementById('user-input');
+  if(b) b.disabled = !on; if(i) { i.disabled = !on; if(on) i.focus(); }
+}
+function updateProgress() {
+  const p = Math.min(100, (S.answersGiven / S.totalQuestions) * 100);
+  const prog = document.getElementById('prog'); if(prog) prog.style.width = p+'%';
+  const lbl = document.getElementById('step-label'); if(lbl) lbl.textContent = `Question ${Math.min(S.answersGiven+1, S.totalQuestions)} of ${S.totalQuestions}`;
+}
+function copyReport() { navigator.clipboard.writeText(S.reportMarkdown).then(()=>{ event.target.textContent='✓ Copied!'; setTimeout(()=>event.target.textContent='📋 Copy',2000); }); }
+function printReport() { window.print(); }
+
+init();
+</script>
+</body>
+</html>
