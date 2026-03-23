@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Your Deep Analysis</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" href="/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
@@ -164,7 +166,7 @@ async function askNextQuestion() {
   var div = document.createElement('div');
   div.className = 'msg';
   var liveId = 'ai-' + Date.now();
-  div.innerHTML = '<div class="msg-label">AI Analyst</div><div class="msg-ai" id="' + liveId + '"></div>';
+  div.innerHTML = '<div class="msg-label">Career Resilience Advisor</div><div class="msg-ai" id="' + liveId + '"></div>';
   chat.appendChild(div);
   try {
     var text = await streamFromClaude(S.messages, function(partial) {
@@ -239,7 +241,7 @@ async function generateReport() {
       S.reportMarkdown = reportText;
       document.getElementById('step-label').textContent = 'Analysis complete ✓';
       var btns = document.createElement('div');
-      btns.innerHTML = '<div class="save-btns"><button class="save-btn" onclick="copyReport()">📋 Copy</button><button class="save-btn" onclick="printReport()">🖨️ Print / PDF</button><button class="save-btn primary" onclick="window.location.href=\'/\'">Retake Quiz</button></div>';
+      btns.innerHTML = '<div class="save-btns"><button class="save-btn" onclick="copyReport()">📋 Copy Report</button><button class="save-btn" onclick="printReport()">🖨️ Print / PDF</button></div><div class="save-btns" style="margin-top:8px"><button class="save-btn" onclick="shareTwitter()">𝕏 Twitter</button><button class="save-btn" onclick="shareLinkedIn()">in LinkedIn</button><button class="save-btn" onclick="shareLink()">🔗 Copy Link</button><button class="save-btn primary" onclick="window.location.href=\'/\'">Retake Quiz</button></div>';
       chat.appendChild(btns);
       return;
     } catch(e) {
@@ -261,7 +263,7 @@ function addMsg(role, text) {
   if (role === 'user') {
     div.innerHTML = '<div class="msg-label" style="text-align:right">You</div><div class="msg-user">' + text + '</div>';
   } else {
-    div.innerHTML = '<div class="msg-label">AI Analyst</div><div class="msg-ai">' + text + '</div>';
+    div.innerHTML = '<div class="msg-label">Career Resilience Advisor</div><div class="msg-ai">' + text + '</div>';
   }
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
@@ -274,7 +276,7 @@ function showTyping() {
   var d = document.createElement('div');
   d.id = 'typing-indicator';
   d.className = 'msg';
-  d.innerHTML = '<div class="msg-label">AI Analyst</div><div class="msg-ai"><div class="typing"><span></span><span></span><span></span></div></div>';
+  d.innerHTML = '<div class="msg-label">Career Resilience Advisor</div><div class="msg-ai"><div class="typing"><span></span><span></span><span></span></div></div>';
   chat.appendChild(d);
   chat.scrollTop = chat.scrollHeight;
 }
@@ -307,6 +309,22 @@ function copyReport() {
 }
 
 function printReport() { window.print(); }
+
+function shareTwitter() {
+  var text = encodeURIComponent('Just got my AI Career Resilience deep analysis for ' + S.jobTitle + '. Eye-opening stuff.\n\nGet yours → https://willaireplaceme.online');
+  window.open('https://twitter.com/intent/tweet?text=' + text, '_blank');
+}
+
+function shareLinkedIn() {
+  window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent('https://willaireplaceme.online'), '_blank');
+}
+
+function shareLink() {
+  navigator.clipboard.writeText('I just got my AI Career Resilience deep analysis. Highly recommend checking where you stand: willaireplaceme.online').then(function() {
+    var b = event.target; var o = b.textContent;
+    b.textContent = '✓ Copied!'; setTimeout(function() { b.textContent = o; }, 2000);
+  });
+}
 
 init();
 </script>
