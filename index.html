@@ -1371,6 +1371,9 @@ function renderQ(){
     b.style.opacity='0';
     b.textContent=o.text;
     b.onclick=()=>{
+      if(b.dataset.clicked)return;
+      b.dataset.clicked='1';
+      el.querySelectorAll('.opt').forEach(x=>{x.style.pointerEvents='none';x.style.opacity='0.5';});
       ans.push({val:o.val,cat:q.cat});
       // Update gauge immediately
       const live=calcLive();
@@ -1391,7 +1394,10 @@ function renderQ(){
 }
 
 // ANALYZING
+let anaRunning=false;
 function showAna(){
+  if(anaRunning)return;
+  anaRunning=true;
   go('s-ana');
   const bE=document.getElementById('ana-bars'),sE=document.getElementById('ana-steps');
   bE.innerHTML='';sE.innerHTML='';
@@ -1878,7 +1884,7 @@ async function startCheckout(){
 }
 
 function restart(){
-  selJob=null;baseScore=50;ans=[];qI=0;
+  selJob=null;baseScore=50;ans=[];qI=0;anaRunning=false;
   document.getElementById('job-input').value='';
   go('s-job');
 }
