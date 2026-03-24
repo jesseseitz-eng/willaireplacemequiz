@@ -6,6 +6,16 @@
   external_node_modules = ["stripe", "@anthropic-ai/sdk"]
 
 [[redirects]]
+  from = "/share/og.svg"
+  to = "/.netlify/functions/share"
+  status = 200
+
+[[redirects]]
+  from = "/share"
+  to = "/.netlify/functions/share"
+  status = 200
+
+[[redirects]]
   from = "/api/create-checkout"
   to = "/.netlify/functions/create-checkout"
   status = 200
