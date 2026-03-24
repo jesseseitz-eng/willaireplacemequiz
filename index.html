@@ -1544,52 +1544,65 @@ function showRes(){
       </div>
     </div>
 
-    <div class="insight fiu d1">
-      <div class="insight-txt">${getInsight(score)}</div>
-    </div>
-
-    <div class="tips fiu d1">
-      <div class="tips-h">What You Can Do Now</div>
-      ${tips.map(t=>`
-        <div class="tip">
-          <div class="tip-top">
-            <div class="tip-i" style="background:${t.bg}">${t.i}</div>
-            <div class="tip-t">${t.t}</div>
-          </div>
-          <div class="tip-d">${t.d}</div>
-        </div>
-      `).join('')}
-    </div>
-
-    <div class="upsell fiu d1" id="upsell-section">
-      <div class="upsell-badge">Unlock Full Results</div>
-      <div class="upsell-h">See what's behind the 🔒</div>
-      <div class="upsell-p">Your score is <strong>${score}/100</strong> — but the <strong>why</strong> matters more than the number. Get a personalized AI career coaching session built specifically for <strong>${selJob}</strong>.</div>
-      <div class="upsell-feats">
-        <div class="upsell-f"><span class="ck">🔓</span> Your Hidden Strength, Biggest Vulnerability & Career Moat</div>
-        <div class="upsell-f"><span class="ck">✓</span> Which specific tasks in your role AI can handle today</div>
-        <div class="upsell-f"><span class="ck">✓</span> Personalized upskilling roadmap with courses & certs</div>
-        <div class="upsell-f"><span class="ck">✓</span> 12-month career resilience action plan</div>
-        <div class="upsell-f"><span class="ck">✓</span> Timeline: when AI will significantly impact your role</div>
-      </div>
-      <div class="upsell-btn" tabindex="-1" onclick="startCheckout()">Unlock My Full Analysis — $9.99</div>
-      <div class="upsell-note">Career coaching worth $200+ · One-time payment · Delivered in minutes</div>
-    </div>
-
-    <div class="email-sec fiu d3">
-      <div class="email-h">Track how your score changes over time</div>
-      <div class="email-p">AI capabilities evolve fast. Get a monthly update on how new developments affect your specific career risk.</div>
+    <div class="email-sec fiu d1" id="email-gate" style="background:linear-gradient(135deg,rgba(51,136,255,0.06),rgba(34,204,170,0.06));border:1px solid rgba(51,136,255,0.2);">
+      <div style="font-size:16px;font-weight:700;margin-bottom:4px;color:var(--text);">See your free action plan</div>
+      <div class="email-p" style="margin-bottom:12px;">Get personalized tips for <strong style="color:var(--text)">${selJob}</strong> based on your score — plus monthly AI career updates.</div>
       <div class="email-row" id="em-r">
         <input type="email" class="email-in" id="em-i" placeholder="your@email.com">
-        <button class="email-btn" onclick="subE()">Get Updates</button>
+        <button class="email-btn" onclick="subE()">Show My Plan</button>
       </div>
-      <div class="email-ok" id="em-ok">✓ You're in — we'll keep you posted.</div>
+      <div style="font-size:10px;color:var(--text-dim);margin-top:6px;">No spam. Unsubscribe anytime.</div>
+    </div>
+
+    <div id="gated-content" style="display:none;">
+      <div class="insight fiu d1">
+        <div class="insight-txt">${getInsight(score)}</div>
+      </div>
+
+      <div class="tips fiu d1">
+        <div class="tips-h">What You Can Do Now</div>
+        ${tips.map(t=>`
+          <div class="tip">
+            <div class="tip-top">
+              <div class="tip-i" style="background:${t.bg}">${t.i}</div>
+              <div class="tip-t">${t.t}</div>
+            </div>
+            <div class="tip-d">${t.d}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="upsell fiu d1" id="upsell-section">
+        <div class="upsell-badge">Unlock Full Results</div>
+        <div class="upsell-h">See what's behind the 🔒</div>
+        <div class="upsell-p">Your score is <strong>${score}/100</strong> — but the <strong>why</strong> matters more than the number. Get a personalized AI career coaching session built specifically for <strong>${selJob}</strong>.</div>
+        <div class="upsell-feats">
+          <div class="upsell-f"><span class="ck">🔓</span> Your Hidden Strength, Biggest Vulnerability & Career Moat</div>
+          <div class="upsell-f"><span class="ck">✓</span> Which specific tasks in your role AI can handle today</div>
+          <div class="upsell-f"><span class="ck">✓</span> Personalized upskilling roadmap with courses & certs</div>
+          <div class="upsell-f"><span class="ck">✓</span> 12-month career resilience action plan</div>
+          <div class="upsell-f"><span class="ck">✓</span> Timeline: when AI will significantly impact your role</div>
+        </div>
+        <div class="upsell-btn" tabindex="-1" onclick="startCheckout()">Unlock My Full Analysis — $9.99</div>
+        <div class="upsell-note">Career coaching worth $200+ · One-time payment · Delivered in minutes</div>
+      </div>
     </div>
 
     <button class="retake" onclick="restart()">↻ Take It Again</button>
   `;
   go('s-res');
   setTimeout(()=>generateShareImage(score,r.l),500);
+}
+
+function revealGated(){
+  const gate=document.getElementById('email-gate');
+  const content=document.getElementById('gated-content');
+  if(gate) gate.style.display='none';
+  if(content){
+    content.style.display='block';
+    content.querySelectorAll('.fiu').forEach(el=>{el.style.opacity='0';el.classList.add('fiu');});
+    setTimeout(()=>content.querySelectorAll('.fiu').forEach(el=>{el.style.opacity='';}),50);
+  }
 }
 
 function subE(){
@@ -1604,12 +1617,10 @@ function subE(){
     formData.append('risk-level',lastRisk||'');
     fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:formData.toString()})
       .then(()=>{
-        document.getElementById('em-r').style.display='none';
-        document.getElementById('em-ok').style.display='block';
+        revealGated();
       })
       .catch(()=>{
-        document.getElementById('em-r').style.display='none';
-        document.getElementById('em-ok').style.display='block';
+        revealGated();
       });
   }
 }
