@@ -407,7 +407,7 @@
     font-size:15px; font-weight:600; margin-bottom:6px;
   }
   .share-p { font-size:13px; color:var(--text-dim); margin-bottom:14px; }
-  .share-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; }
+  .share-row { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:6px; width:100%; }
   .share-b {
     background:var(--bg); border:1px solid var(--border);
     color:var(--text); padding:14px 8px;
@@ -551,6 +551,8 @@
     .trust-row{gap:18px}
     .card{padding:28px 16px}
     .jgrid{grid-template-columns:1fr 1fr}
+    .share-row{grid-template-columns:1fr 1fr 1fr 1fr}
+    .share-b{font-size:11px;padding:10px 4px !important}
   }
 </style>
 </head>
@@ -1522,24 +1524,45 @@ function showRes(){
       </div>
       <div class="cmp">More resilient than <strong>${pct}%</strong> of people in similar roles</div>
       <div class="dsrc">Data: BLS 2026 · Anthropic Economic Index · Goldman Sachs · Microsoft Research · Wharton</div>
+
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
+        <div class="upsell-btn" tabindex="-1" onclick="startCheckout()" style="font-size:14px;padding:14px 24px;">Unlock Full Analysis — $9.99</div>
+        <div class="upsell-note" style="margin-top:6px;">See what's behind the 🔒 · Delivered in minutes</div>
+      </div>
+
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);text-align:center;">
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:var(--text-mid);">Think your coworkers are more AI-proof?</div>
+        <div class="share-row">
+          <button class="share-b" tabindex="-1" onclick="shIG(${score},'${r.l}')" style="background:linear-gradient(135deg,#833AB4,#E1306C,#F77737);border:none;color:white;font-weight:600;padding:10px 8px;">📸 Story</button>
+          <button class="share-b" tabindex="-1" onclick="shTw(${score},'${r.l}')" style="padding:10px 8px;">𝕏 Post</button>
+          <button class="share-b" tabindex="-1" onclick="shLi(${score},'${r.l}')" style="background:rgba(0,119,181,0.15);border-color:rgba(0,119,181,0.3);padding:10px 8px;">in Share</button>
+          <button class="share-b" tabindex="-1" onclick="shCp(${score},'${r.l}')" style="padding:10px 8px;">📋 Copy</button>
+        </div>
+        <div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%">
+          <button class="share-b" tabindex="-1" onclick="shFb(${score},'${r.l}')" style="padding:10px 8px;">f Facebook</button>
+          <button class="share-b" tabindex="-1" onclick="shTxt(${score},'${r.l}')" style="padding:10px 8px;">💬 Text</button>
+        </div>
+      </div>
     </div>
 
-    <div class="share-sec fiu d1" style="margin-bottom:16px;background:linear-gradient(135deg,rgba(51,136,255,0.08),rgba(34,204,170,0.05));border:1px solid rgba(51,136,255,0.15);">
-      <div class="share-h" style="font-size:18px;">🎯 Challenge your friends</div>
-      <div class="share-p" style="display:block;margin-bottom:14px;">You scored <strong style="color:${scoreCol}">${score}/100</strong>. Think your coworkers are more AI-proof than you?</div>
-      <div class="share-row">
-        <button class="share-b" tabindex="-1" onclick="shIG(${score},'${r.l}')" style="background:linear-gradient(135deg,#833AB4,#E1306C,#F77737);border:none;color:white;font-weight:600;">📸 Story</button>
-        <button class="share-b" tabindex="-1" onclick="shTw(${score},'${r.l}')">𝕏 Twitter</button>
-        <button class="share-b" tabindex="-1" onclick="shLi(${score},'${r.l}')" style="background:rgba(0,119,181,0.15);border-color:rgba(0,119,181,0.3);">in LinkedIn</button>
-        <button class="share-b" tabindex="-1" onclick="shFb(${score},'${r.l}')">f Facebook</button>
-      </div>
-      <div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%">
-        <button class="share-b" tabindex="-1" onclick="shCp(${score},'${r.l}')">📋 Copy Link</button>
-        <button class="share-b" tabindex="-1" onclick="shTxt(${score},'${r.l}')">💬 Text a Friend</button>
-      </div>
+    <div class="insight fiu d1">
+      <div class="insight-txt">${getInsight(score)}</div>
     </div>
 
-    <div class="upsell fiu d1" id="upsell-section" style="margin-top:-12px;">
+    <div class="tips fiu d1">
+      <div class="tips-h">What You Can Do Now</div>
+      ${tips.map(t=>`
+        <div class="tip">
+          <div class="tip-top">
+            <div class="tip-i" style="background:${t.bg}">${t.i}</div>
+            <div class="tip-t">${t.t}</div>
+          </div>
+          <div class="tip-d">${t.d}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="upsell fiu d1" id="upsell-section">
       <div class="upsell-badge">Unlock Full Results</div>
       <div class="upsell-h">See what's behind the 🔒</div>
       <div class="upsell-p">Your score is <strong>${score}/100</strong> — but the <strong>why</strong> matters more than the number. Get a personalized AI career coaching session built specifically for <strong>${selJob}</strong>.</div>
@@ -1554,24 +1577,7 @@ function showRes(){
       <div class="upsell-note">Career coaching worth $200+ · One-time payment · Delivered in minutes</div>
     </div>
 
-    <div class="insight fiu d3">
-      <div class="insight-txt">${getInsight(score)}</div>
-    </div>
-
-    <div class="tips fiu d3">
-      <div class="tips-h">What You Can Do Now</div>
-      ${tips.map(t=>`
-        <div class="tip">
-          <div class="tip-top">
-            <div class="tip-i" style="background:${t.bg}">${t.i}</div>
-            <div class="tip-t">${t.t}</div>
-          </div>
-          <div class="tip-d">${t.d}</div>
-        </div>
-      `).join('')}
-    </div>
-
-    <div class="email-sec fiu d4">
+    <div class="email-sec fiu d3">
       <div class="email-h">Track how your score changes over time</div>
       <div class="email-p">AI capabilities evolve fast. Get a monthly update on how new developments affect your specific career risk.</div>
       <div class="email-row" id="em-r">
@@ -1713,18 +1719,27 @@ function generateShareImage(score,riskLabel){
   ctx.font='400 38px sans-serif';
   ctx.fillText(selJob,540,990);
 
+  // Percentile comparison — the viral trigger
+  const pctVal=Math.max(8,Math.min(92,Math.round(100-score+(Math.random()*8-4))));
+  ctx.fillStyle='#eeeef3';
+  ctx.font='500 32px sans-serif';
+  ctx.fillText('More resilient than '+pctVal+'% of people',540,1060);
+  ctx.fillStyle='#55556d';
+  ctx.font='400 26px sans-serif';
+  ctx.fillText('in similar roles',540,1100);
+
   // Divider with gradient fade
   const divGrd=ctx.createLinearGradient(280,0,800,0);
   divGrd.addColorStop(0,'rgba(28,28,44,0)');
   divGrd.addColorStop(0.5,'#2a2a40');
   divGrd.addColorStop(1,'rgba(28,28,44,0)');
-  ctx.beginPath(); ctx.moveTo(280,1060); ctx.lineTo(800,1060);
+  ctx.beginPath(); ctx.moveTo(280,1160); ctx.lineTo(800,1160);
   ctx.strokeStyle=divGrd; ctx.lineWidth=2; ctx.stroke();
 
   // CTA text
-  ctx.fillStyle='#9999b2';
-  ctx.font='500 36px sans-serif';
-  ctx.fillText('How AI-resilient is YOUR career?',540,1140);
+  ctx.fillStyle='#eeeef3';
+  ctx.font='600 40px sans-serif';
+  ctx.fillText('What\u2019s YOUR score?',540,1240);
 
   // URL with glow
   ctx.save();
@@ -1732,13 +1747,13 @@ function generateShareImage(score,riskLabel){
   ctx.shadowBlur=20;
   ctx.fillStyle=col;
   ctx.font='700 42px sans-serif';
-  ctx.fillText('willaireplaceme.online',540,1210);
+  ctx.fillText('willaireplaceme.online',540,1310);
   ctx.restore();
 
   // Sub-CTA
   ctx.fillStyle='#55556d';
   ctx.font='400 30px sans-serif';
-  ctx.fillText('Take the free 60-second quiz',540,1270);
+  ctx.fillText('Free 60-second quiz',540,1365);
 
   // Source note at bottom
   ctx.fillStyle='#2a2a3d';
