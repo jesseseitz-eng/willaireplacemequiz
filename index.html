@@ -1541,6 +1541,7 @@ function showRes(){
       <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);text-align:center;">
         <div class="upsell-btn" tabindex="-1" onclick="startCheckout()" style="font-size:15px;padding:15px 24px;">Unlock My Full Analysis — $9.99</div>
         <div style="font-size:12px;color:var(--text-mid);margin-top:8px;line-height:1.5;">Chat 1-on-1 with an AI career advisor about <strong>${selJob}</strong>.<br>Get a personalized report with your strengths, blind spots & action plan.</div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:6px;">🔒 100% private — your conversation is never stored or shared</div>
       </div>
     </div>
 
@@ -1585,6 +1586,7 @@ function showRes(){
         </div>
         <div class="upsell-btn" tabindex="-1" onclick="startCheckout()">Unlock My Full Analysis — $9.99</div>
         <div class="upsell-note">Career coaching worth $200+ · One-time payment · Delivered in minutes</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">🔒 100% private — your conversation is never stored or shared</div>
       </div>
     </div>
 
@@ -1751,24 +1753,37 @@ function generateShareImage(score,riskLabel){
   ctx.font='600 40px sans-serif';
   ctx.fillText('What\u2019s YOUR score?',540,1240);
 
-  // URL with glow
+  // URL with strong glow — needs to be unmissable
   ctx.save();
   ctx.shadowColor=col;
-  ctx.shadowBlur=20;
+  ctx.shadowBlur=40;
   ctx.fillStyle=col;
-  ctx.font='700 42px sans-serif';
-  ctx.fillText('willaireplaceme.online',540,1310);
+  ctx.font='800 52px sans-serif';
+  ctx.fillText('willaireplaceme.online',540,1320);
+  ctx.restore();
+  // Double-draw for extra glow
+  ctx.save();
+  ctx.shadowColor=col;
+  ctx.shadowBlur=80;
+  ctx.fillStyle=col;
+  ctx.font='800 52px sans-serif';
+  ctx.fillText('willaireplaceme.online',540,1320);
   ctx.restore();
 
   // Sub-CTA
+  ctx.fillStyle='#9999b2';
+  ctx.font='500 32px sans-serif';
+  ctx.fillText('Free 60-second quiz',540,1380);
+
+  // Swipe up hint for Stories
   ctx.fillStyle='#55556d';
-  ctx.font='400 30px sans-serif';
-  ctx.fillText('Free 60-second quiz',540,1365);
+  ctx.font='400 26px sans-serif';
+  ctx.fillText('\u2191 Add link sticker to share',540,1440);
 
   // Source note at bottom
   ctx.fillStyle='#2a2a3d';
   ctx.font='400 22px monospace';
-  ctx.fillText('Data: BLS 2026 \u00b7 Anthropic \u00b7 Goldman Sachs',540,1800);
+  ctx.fillText('Data: BLS 2026 \u00b7 Anthropic \u00b7 Goldman Sachs',540,1700);
 
   c.toBlob(function(blob){ shareImageBlob=blob; },'image/png');
 }
