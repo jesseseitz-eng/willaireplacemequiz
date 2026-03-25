@@ -1644,8 +1644,11 @@ function generateShareImage(score,riskLabel){
   const col=score<=25?'#22dd77':score<=50?'#ffcc00':score<=72?'#ff7733':'#ff3344';
   const glowCol=score<=25?'0,221,119':score<=50?'255,204,0':score<=72?'255,119,51':'255,51,68';
 
+  // Shift everything down by 120px to center content vertically
+  const oy=120;
+
   // Large radial glow behind gauge
-  const grd=ctx.createRadialGradient(540,520,50,540,520,500);
+  const grd=ctx.createRadialGradient(540,520+oy,50,540,520+oy,500);
   grd.addColorStop(0,`rgba(${glowCol},0.12)`);
   grd.addColorStop(0.5,`rgba(${glowCol},0.03)`);
   grd.addColorStop(1,'rgba(7,7,13,0)');
@@ -1653,7 +1656,7 @@ function generateShareImage(score,riskLabel){
   ctx.fillRect(0,0,1080,1920);
 
   // Secondary blue ambient glow
-  const grd2=ctx.createRadialGradient(540,900,100,540,900,700);
+  const grd2=ctx.createRadialGradient(540,900+oy,100,540,900+oy,700);
   grd2.addColorStop(0,'rgba(51,136,255,0.04)');
   grd2.addColorStop(1,'rgba(7,7,13,0)');
   ctx.fillStyle=grd2;
@@ -1664,7 +1667,7 @@ function generateShareImage(score,riskLabel){
   ctx.font='600 26px sans-serif';
   ctx.textAlign='center';
   ctx.letterSpacing='4px';
-  ctx.fillText('AI CAREER RESILIENCE SCORE',540,200);
+  ctx.fillText('AI CAREER RESILIENCE SCORE',540,200+oy);
   ctx.letterSpacing='0px';
 
   // Thin top line accent
@@ -1672,12 +1675,12 @@ function generateShareImage(score,riskLabel){
   topLine.addColorStop(0,'rgba(51,136,255,0)');
   topLine.addColorStop(0.5,col);
   topLine.addColorStop(1,'rgba(51,136,255,0)');
-  ctx.beginPath(); ctx.moveTo(340,230); ctx.lineTo(740,230);
+  ctx.beginPath(); ctx.moveTo(340,230+oy); ctx.lineTo(740,230+oy);
   ctx.strokeStyle=topLine; ctx.lineWidth=2; ctx.stroke();
 
   // Gauge arc background
   ctx.beginPath();
-  ctx.arc(540,560,240,Math.PI,2*Math.PI);
+  ctx.arc(540,560+oy,240,Math.PI,2*Math.PI);
   ctx.strokeStyle='#161625';
   ctx.lineWidth=48;
   ctx.lineCap='round';
@@ -1689,7 +1692,7 @@ function generateShareImage(score,riskLabel){
   ctx.shadowColor=col;
   ctx.shadowBlur=30;
   ctx.beginPath();
-  ctx.arc(540,560,240,Math.PI,fillAngle);
+  ctx.arc(540,560+oy,240,Math.PI,fillAngle);
   ctx.strokeStyle=col;
   ctx.lineWidth=48;
   ctx.lineCap='round';
@@ -1698,12 +1701,12 @@ function generateShareImage(score,riskLabel){
 
   // Needle
   const nx=540+Math.cos(fillAngle)*195;
-  const ny=560+Math.sin(fillAngle)*195;
-  ctx.beginPath(); ctx.moveTo(540,560); ctx.lineTo(nx,ny);
+  const ny=560+oy+Math.sin(fillAngle)*195;
+  ctx.beginPath(); ctx.moveTo(540,560+oy); ctx.lineTo(nx,ny);
   ctx.strokeStyle='#eeeef3'; ctx.lineWidth=5; ctx.lineCap='round'; ctx.stroke();
 
   // Center dot
-  ctx.beginPath(); ctx.arc(540,560,12,0,Math.PI*2);
+  ctx.beginPath(); ctx.arc(540,560+oy,12,0,Math.PI*2);
   ctx.fillStyle='#eeeef3'; ctx.fill();
 
   // Score number with glow
@@ -1713,45 +1716,45 @@ function generateShareImage(score,riskLabel){
   ctx.fillStyle=col;
   ctx.font='800 180px sans-serif';
   ctx.textAlign='center';
-  ctx.fillText(score,540,790);
+  ctx.fillText(score,540,790+oy);
   ctx.restore();
 
   // /100 risk score
   ctx.fillStyle='#55556d';
   ctx.font='400 34px monospace';
-  ctx.fillText('/ 100 risk score',540,845);
+  ctx.fillText('/ 100 risk score',540,845+oy);
 
   // Risk label
   ctx.fillStyle=col;
   ctx.font='700 46px sans-serif';
-  ctx.fillText(riskLabel.toUpperCase(),540,920);
+  ctx.fillText(riskLabel.toUpperCase(),540,920+oy);
 
   // Job title
   ctx.fillStyle='#9999b2';
   ctx.font='400 38px sans-serif';
-  ctx.fillText(selJob,540,990);
+  ctx.fillText(selJob,540,990+oy);
 
   // Percentile comparison — the viral trigger
   const pctVal=Math.max(8,Math.min(92,Math.round(100-score+(Math.random()*8-4))));
   ctx.fillStyle='#eeeef3';
   ctx.font='500 32px sans-serif';
-  ctx.fillText('More resilient than '+pctVal+'% of people',540,1060);
+  ctx.fillText('More resilient than '+pctVal+'% of people',540,1060+oy);
   ctx.fillStyle='#55556d';
   ctx.font='400 26px sans-serif';
-  ctx.fillText('in similar roles',540,1100);
+  ctx.fillText('in similar roles',540,1100+oy);
 
   // Divider with gradient fade
   const divGrd=ctx.createLinearGradient(280,0,800,0);
   divGrd.addColorStop(0,'rgba(28,28,44,0)');
   divGrd.addColorStop(0.5,'#2a2a40');
   divGrd.addColorStop(1,'rgba(28,28,44,0)');
-  ctx.beginPath(); ctx.moveTo(280,1160); ctx.lineTo(800,1160);
+  ctx.beginPath(); ctx.moveTo(280,1160+oy); ctx.lineTo(800,1160+oy);
   ctx.strokeStyle=divGrd; ctx.lineWidth=2; ctx.stroke();
 
   // CTA text
   ctx.fillStyle='#eeeef3';
   ctx.font='600 40px sans-serif';
-  ctx.fillText('What\u2019s YOUR score?',540,1240);
+  ctx.fillText('What\u2019s YOUR score?',540,1240+oy);
 
   // URL with strong glow — needs to be unmissable
   ctx.save();
@@ -1759,7 +1762,7 @@ function generateShareImage(score,riskLabel){
   ctx.shadowBlur=40;
   ctx.fillStyle=col;
   ctx.font='800 52px sans-serif';
-  ctx.fillText('willaireplaceme.online',540,1320);
+  ctx.fillText('willaireplaceme.online',540,1320+oy);
   ctx.restore();
   // Double-draw for extra glow
   ctx.save();
@@ -1767,23 +1770,18 @@ function generateShareImage(score,riskLabel){
   ctx.shadowBlur=80;
   ctx.fillStyle=col;
   ctx.font='800 52px sans-serif';
-  ctx.fillText('willaireplaceme.online',540,1320);
+  ctx.fillText('willaireplaceme.online',540,1320+oy);
   ctx.restore();
 
   // Sub-CTA
   ctx.fillStyle='#9999b2';
   ctx.font='500 32px sans-serif';
-  ctx.fillText('Free 60-second quiz',540,1380);
-
-  // Swipe up hint for Stories
-  ctx.fillStyle='#55556d';
-  ctx.font='400 26px sans-serif';
-  ctx.fillText('\u2191 Add link sticker to share',540,1440);
+  ctx.fillText('Free 60-second quiz',540,1380+oy);
 
   // Source note at bottom
   ctx.fillStyle='#2a2a3d';
   ctx.font='400 22px monospace';
-  ctx.fillText('Data: BLS 2026 \u00b7 Anthropic \u00b7 Goldman Sachs',540,1700);
+  ctx.fillText('Data: BLS 2026 \u00b7 Anthropic \u00b7 Goldman Sachs',540,1780);
 
   c.toBlob(function(blob){ shareImageBlob=blob; },'image/png');
 }
